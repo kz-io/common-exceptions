@@ -1,10 +1,7 @@
 {
   "name": "@kz/common-exceptions",
   "version": "0.0.1",
-  "exports": {
-    ".": "./mod.ts",
-    "./types": "./src/types/mod.ts"
-  },
+  "exports": "./mod.ts",
   "lint": {
     "rules": {
       "tags": [
@@ -36,7 +33,7 @@
     "cov:gen": "deno coverage coverage --lcov --output=cov.lcov",
     "cov:report": "deno coverage --html coverage",
     "cov": "deno task test && deno task cov:gen && deno task cov:report",
-    "docs": "deno doc --html --name=@kz/core ./mod.ts",
+    "docs": "deno doc --html --name=@kz/common-types ./mod.ts",
     "pre-commit": "deno task test && deno task lint && deno task fmt && deno task docs"
   },
   "imports": {

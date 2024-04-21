@@ -14,11 +14,70 @@ A collection of the most common exceptions used across kz packages, adapted for 
 </p>
 
 <p align="center">
-<a href="https://jsr.io/@kz/common-exceptions/doc">Docs</a>
+<a href="https://jsr.io/@kz/common-exceptions">Overview</a> | 
+<a href="https://jsr.io/@kz/common-exceptions/doc">API Docs</a>
+</p>
+
+
+Exceptions in kz are designed to be as intuitive and informative as possible. They are implemented
+along-side the Exception Explainer tool, referred to as ex^2, which is a web-based tool that helps developers
+understand the exceptions that are thrown in their code.
+
+All exceptions in kz are derived from the base `Exception` class, which can be
+extended to create custom exceptions. All exceptions have a constructor signature that accepts a message and
+additional data. This additional data can be any data that a developer may find useful
+for debugging or handling the exception, this data is provided to the ex^2 tool to help developers understand
+the exception and its context.
+
+```ts
+import { assertEquals } from '@std/assert';
+import { Exception } from './mod.ts';
+
+const exception = new Exception('An error occurred.', { prev: 'Execution failure' });
+const url = 'https://docs.integereleven.com/tools/ex2/0x0?message=An%20error%20occurred.&data=%7B%22prev%22%3A%22Execution%20failure%22%7D';
+
+assertEquals(exception.message, 'An error occurred.');
+assertEquals(exception.data, { prev: 'Execution failure' });
+assertEquals(exception.helpUrl, url);
+```
+
+Some exceptions have data properties that are especially relevant to
+the exception type and can be used without an exception message to create a new instance of the exception,
+with an exception message that is programmatically generated from the supplied data.
+
+```ts ignore
+import { assertEquals } from '@std/assert';
+import { ExternalException } from './mod.ts';
+
+const exception = new ExternalException({externalName: '@i11n/async'});
+
+assertEquals(exception.message, 'An external codebase, @i11n/async, raised an exception.');
+```
+
+## Contributing
+
+Contributions are welcome! Take a look at our [contributing guidelines][contributing] to get started.
+
+<p align="center">
+<a href="https://github.com/i11n/.github/blob/main/.github/CODE_OF_CONDUCT.md">
+  <img alt="Contributor Covenant" src="https://img.shields.io/badge/Contributor%20Covenant-2.1-4baaaa.svg?style=flat-square" />
+</a>
+</p>
+
+## License
+
+The MIT License (MIT) 2022 integereleven. Refer to [LICENSE][license] for details.
+
+<p align="center">
+<sub>Built with ❤ by integereleven</sub>
 </p>
 
 <p align="center">
-<sub>Built with ❤ by integereleven and <a href="https://github.com/kz-io/common-exceptions/graphs/contributors">contributors</a></sub>
+<img
+  alt="kz.io logo"
+  height="64"
+  src="https://raw.githubusercontent.com/i11n/.github/main/svg/brand/color/open-stroke.svg"
+/>
 </p>
 
 <p align="center">
@@ -33,44 +92,6 @@ A collection of the most common exceptions used across kz packages, adapted for 
 </a>
 </p>
 
-## Table of contents
-
-- [Features](#features)
-- [Installation](#installation)
-- [Examples](#examples)
-- [Contributing](#contributing)
-- [License](#license)
-
-## Features
-
-[(to top)](#table-of-contents)
-
-<!-- @TODO Enumerate key features -->
-
-## Installation
-
-[(to top)](#table-of-contents)
-
-[jsr][JSR] is used for stable releases.
-
-To install, simply run the `deno add` command:
-
-```bash
-$ deno add @kz/common-exceptions
-```
-
-You may also specify a specific version:
-
-```bash
-$ deno add @kz/common-exceptions@^0.0.1
-```
-
-And then import into your module.
-
-```ts ignore
-import {} from '@kz/common-exceptions';
-```
-
 <p align="center">
 <a href="https://jsr.io/@kz/common-exceptions">
   <img src="https://jsr.io/badges/@kz/common-exceptions" alt="" />
@@ -78,41 +99,6 @@ import {} from '@kz/common-exceptions';
 <a href="https://jsr.io/@kz/common-exceptions">
   <img src="https://jsr.io/badges/@kz/common-exceptions/score" alt="" />
 </a>
-</p>
-
-## Examples
-
-[(to top)](#table-of-contents)
-
-<!-- @TODO Add an example, or add links to examples -->
-
-```ts
-```
-
-## Contributing
-
-[(to top)](#table-of-contents)
-
-Contributions are welcome! Take a look at our [contributing guidelines][contributing] to get started.
-
-<p align="center">
-<a href="https://github.com/i11n/.github/blob/main/.github/CODE_OF_CONDUCT.md">
-  <img alt="Contributor Covenant" src="https://img.shields.io/badge/Contributor%20Covenant-2.1-4baaaa.svg?style=flat-square" />
-</a>
-</p>
-
-## License
-
-[(to top)](#table-of-contents)
-
-The MIT License (MIT) 2022 integereleven. Refer to [LICENSE][license] for details.
-
-<p align="center">
-<img
-  alt="kz.io logo"
-  height="64"
-  src="https://raw.githubusercontent.com/i11n/.github/main/svg/brand/color/open-stroke.svg"
-/>
 </p>
 
 [deno]: https://deno.dom "Deno homepage"
