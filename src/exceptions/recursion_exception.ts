@@ -1,17 +1,29 @@
 /**
- * This file exports the RecursionException class and its related exception data type.
- *
- * @copyright 2024 integereleven. All rights reserved. MIT license.
+ * @copyright 2020-2024 integereleven. All rights reserved. MIT license.
+ * @file This file exports the RecursionException class and its related exception data type.
  */
 
-import { definedArgs } from '../_internals/defined_args.ts';
+import { definedArgs } from '../_internal/defined_args.ts';
 import { OperationException } from './operation_exception.ts';
 
-import type { SoftwareOperation } from '../../deps.ts';
-import type { BaseExceptionData } from '../types/types.ts';
+import type { SoftwareOperation } from '@kz/common-types';
+import type { BaseExceptionData } from '../types/type-aliases.ts';
 
 /**
- * Additional data about the RecursionException exception.
+ * Additional, related data for the {@link RecursionException} class.
+ *
+ * @example
+ * ```ts
+ * import { assertEquals } from '@std/assert';
+ * import type { RecursionExceptionData } from './recursion_exception.ts';
+ *
+ * const data: RecursionExceptionData = {
+ *   operationType: 'process',
+ *   operationName: 'foo',
+ * };
+ *
+ * assertEquals(data.operationName, 'foo');
+ * ```
  */
 export type RecursionExceptionData = BaseExceptionData<{
   /**
@@ -30,7 +42,49 @@ export type RecursionExceptionData = BaseExceptionData<{
 }>;
 
 /**
- * An exception raised when a software operation exceeds a max recursion depth.
+ * An exception raised when an argument has the correct type but has an invalid value.
+ *
+ * @param T - The type of the additional, relevant data for the exception.
+ *
+ * @example No arguments - default message
+ * ```ts
+ * import { assertEquals } from '@std/assert';
+ * import { RecursionException } from './recursion_exception.ts';
+ *
+ * const exception = new RecursionException();
+ *
+ * assertEquals(exception.message, 'An operation exceeded maximum recursion depth.');
+ * ```
+ *
+ * @example With provided message
+ * ```ts
+ * import { assertEquals } from '@std/assert';
+ * import { RecursionException } from './recursion_exception.ts';
+ *
+ * const exception = new RecursionException('A process reached the bottom.');
+ *
+ * assertEquals(exception.message, 'A process reached the bottom.');
+ * ```
+ *
+ * @example With provided relevant data
+ * ```ts
+ * import { assertEquals } from '@std/assert';
+ * import { RecursionException } from './recursion_exception.ts';
+ *
+ * const exception = new RecursionException({ operationName: 'foo', recursionDepth: 5 });
+ *
+ * assertEquals(exception.message, 'An operation, foo, exceeded maximum recursion depth of 5 levels.');
+ * ```
+ *
+ * @example With provided message and relevant data
+ * ```ts
+ * import { assertEquals } from '@std/assert';
+ * import { RecursionException } from './recursion_exception.ts';
+ *
+ * const exception = new RecursionException('A process reached the bottom.', { operationName: 'foo', recursionDepth: 5 });
+ *
+ * assertEquals(exception.message, 'A process reached the bottom.');
+ * ```
  */
 export class RecursionException<
   T extends RecursionExceptionData = RecursionExceptionData,
@@ -62,6 +116,9 @@ export class RecursionException<
    */
   constructor(message: string, data: T);
 
+  /**
+   * @ignore implementation
+   */
   constructor(messageOrData: string | T = DEFAULT_MESSAGE, data: T = {} as T) {
     let message: string;
 
@@ -78,7 +135,17 @@ export class RecursionException<
   }
 
   /**
-   * The numeric code unique to this type of exception.
+   * The exception code.
+   *
+   * @example
+   * ```ts
+   * import { assertEquals } from '@std/assert';
+   * import { RecursionException } from './recursion_exception.ts';
+   *
+   * const exception = new RecursionException('A process reached the bottom.');
+   *
+   * assertEquals(exception.code, 18);
+   * ```
    */
   public readonly code: number = 0x12;
 }
@@ -96,26 +163,26 @@ const DEFAULT_MESSAGE = 'An operation exceeded maximum recursion depth.';
  */
 function createMessageFromData(data: RecursionExceptionData): string {
   const { operationName, operationType, recursionDepth } = data;
-  const vowels = ['a', 'e', 'i', 'o', 'u'];
-  const firstLetter = operationType ? operationType[0].toLowerCase() : 'o';
-  const AN = vowels.includes(firstLetter) ? 'An' : 'A';
+  const vowels = 'aeiou';
+  const first = operationType?.charAt(0).toLowerCase() || '';
+  const A = vowels.includes(first) ? 'An' : 'A';
   const L = recursionDepth === 1 ? 'level' : 'levels';
 
   switch (true) {
     case definedArgs(operationName, operationType, recursionDepth):
-      return `${AN} ${operationType}, ${operationName}, exceeded maximum recursion depth of ${recursionDepth} ${L}.`;
+      return `${A} ${operationType}, ${operationName}, exceeded maximum recursion depth of ${recursionDepth} ${L}.`;
     case definedArgs(operationName, recursionDepth):
-      return `${AN} operation, ${operationName}, exceeded maximum recursion depth of ${recursionDepth} ${L}.`;
+      return `An operation, ${operationName}, exceeded maximum recursion depth of ${recursionDepth} ${L}.`;
     case definedArgs(operationName, operationType):
-      return `${AN} ${operationType}, ${operationName}, exceeded maximum recursion depth.`;
+      return `${A} ${operationType}, ${operationName}, exceeded maximum recursion depth.`;
     case definedArgs(operationType, recursionDepth):
-      return `${AN} ${operationType} exceeded maximum recursion depth of ${recursionDepth} ${L}.`;
+      return `${A} ${operationType} exceeded maximum recursion depth of ${recursionDepth} ${L}.`;
     case definedArgs(operationName):
-      return `${AN} operation, ${operationName}, exceeded maximum recursion depth.`;
+      return `An operation, ${operationName}, exceeded maximum recursion depth.`;
     case definedArgs(recursionDepth):
       return `An operation exceeded maximum recursion depth of ${recursionDepth} ${L}.`;
     case definedArgs(operationType):
-      return `${AN} ${operationType} exceeded maximum recursion depth.`;
+      return `${A} ${operationType} exceeded maximum recursion depth.`;
     default:
       return DEFAULT_MESSAGE;
   }

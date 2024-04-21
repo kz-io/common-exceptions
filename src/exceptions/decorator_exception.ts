@@ -1,17 +1,29 @@
 /**
- * This file exports the DecoratorException class and its related exception data type.
- *
- * @copyright 2024 integereleven. All rights reserved. MIT license.
+ * @copyright 2020-2024 integereleven. All rights reserved. MIT license.
+ * @file This file exports the DecoratorException class and its related exception data type.
  */
 
-import { definedArgs } from '../_internals/defined_args.ts';
 import { ValueException } from './value_exception.ts';
+import { definedArgs } from '../_internal/mod.ts';
 
-import type { DecoratorTarget } from '../../deps.ts';
-import type { BaseExceptionData } from '../types/types.ts';
+import type { DecoratorTarget } from '@kz/common-types';
+import type { BaseExceptionData } from '../types/mod.ts';
 
 /**
- * Additional data about the DecoratorException exception.
+ * Additional, related data for the {@link DecoratorException} class.
+ *
+ * @example
+ * ```ts
+ * import { assertEquals } from '@std/assert';
+ * import type { DecoratorExceptionData } from './decorator_exception.ts';
+ *
+ * const data: DecoratorExceptionData = {
+ *   decoratorTarget: 'class',
+ *   decoratorName: 'foo',
+ * };
+ *
+ * assertEquals(data.decoratorName, 'foo');
+ * ```
  */
 export type DecoratorExceptionData = BaseExceptionData<{
   /**
@@ -27,37 +39,82 @@ export type DecoratorExceptionData = BaseExceptionData<{
 
 /**
  * An exception raised when a decorator fails to apply.
+ *
+ * @param T - The type of the additional, relevant data for the exception.
+ *
+ * @example No arguments - default message
+ * ```ts
+ * import { assertEquals } from '@std/assert';
+ * import { DecoratorException } from './decorator_exception.ts';
+ *
+ * const exception = new DecoratorException();
+ *
+ * assertEquals(exception.message, 'A decorator failed to apply.');
+ * ```
+ *
+ * @example With provided message
+ * ```ts
+ * import { assertEquals } from '@std/assert';
+ * import { DecoratorException } from './decorator_exception.ts';
+ *
+ * const exception = new DecoratorException('Decorator was unable to apply.');
+ *
+ * assertEquals(exception.message, 'Decorator was unable to apply.');
+ * ```
+ *
+ * @example With provided relevant data
+ * ```ts
+ * import { assertEquals } from '@std/assert';
+ * import { DecoratorException } from './decorator_exception.ts';
+ *
+ * const exception = new DecoratorException({ decoratorName: 'foo' });
+ *
+ * assertEquals(exception.message, 'A decorator, foo, failed to apply.');
+ * ```
+ *
+ * @example With provided message and relevant data
+ * ```ts
+ * import { assertEquals } from '@std/assert';
+ * import { DecoratorException } from './decorator_exception.ts';
+ *
+ * const exception = new DecoratorException('Decorator was unable to apply.', { argumentName: 'foo' });
+ *
+ * assertEquals(exception.message, 'Decorator was unable to apply.');
+ * ```
  */
 export class DecoratorException<
   T extends DecoratorExceptionData = DecoratorExceptionData,
 > extends ValueException<T> {
   /**
-   * Creates a new DecoratorException with the default message description.
+   * Creates a new instance of the `DecoratorException` class with the default message description.
    */
   constructor();
 
   /**
-   * Creates an DecoratorException with a message description.
+   * Creates a new instance of the `DecoratorException` class with the specified message description.
    *
-   * @param message A human-readable description of the exception.
+   * @param message The exception message description.
    */
   constructor(message: string);
 
   /**
-   * Creates an DecoratorException with a message description created from the exception data.
+   * Creates a new instance of the `DecoratorException` class with the specified relevant data, resulting in a generated message description.
    *
-   * @param data Relevant data about the exception.
+   * @param data The relevant data for the exception.
    */
   constructor(data: T);
 
   /**
-   * Creates an DecoratorException with a message description and additional relevant data.
+   * Creates a new instance of the `DecoratorException` class with the specified message description and additional, relevant data.
    *
-   * @param message The human-readable description of the exception.
-   * @param data Additional, relevant data about the exception.
+   * @param message The exception message description.
+   * @param data The additional, relevant data for the exception.
    */
   constructor(message: string, data: T);
 
+  /**
+   * @ignore implementation
+   */
   constructor(messageOrData: string | T = DEFAULT_MESSAGE, data: T = {} as T) {
     let message: string;
 
@@ -74,13 +131,23 @@ export class DecoratorException<
   }
 
   /**
-   * The numeric code unique to this type of exception.
+   * The exception code.
+   *
+   * @example
+   * ```ts
+   * import { assertEquals } from '@std/assert';
+   * import { DecoratorException } from './decorator_exception.ts';
+   *
+   * const exception = new DecoratorException('Decorator was unable to apply.');
+   *
+   * assertEquals(exception.code, 38);
+   * ```
    */
   public readonly code: number = 0x26;
 }
 
 /**
- * The default message for the DecoratorException exception.
+ * The default message for the {@link DecoratorException} exception.
  */
 const DEFAULT_MESSAGE = 'A decorator failed to apply.';
 
@@ -91,18 +158,18 @@ const DEFAULT_MESSAGE = 'A decorator failed to apply.';
  * @returns The exception message.
  */
 function createMessageFromData(data: DecoratorExceptionData): string {
-  const { decoratorTarget, decoratorName } = data;
-  const vowels = ['a', 'e', 'i', 'o', 'u'];
-  const firstLetter = decoratorTarget ? decoratorTarget[0].toLowerCase() : 'd';
-  const AN = vowels.includes(firstLetter) ? 'An' : 'A';
+  const { decoratorName, decoratorTarget } = data;
+  const vowels = 'aeiou';
+  const first = decoratorTarget ? decoratorTarget.charAt(0).toLowerCase() : 'd';
+  const A = vowels.includes(first) ? 'An' : 'A';
 
   switch (true) {
-    case definedArgs(decoratorTarget, decoratorName):
-      return `${AN} ${decoratorTarget} decorator, ${decoratorName}, failed to apply.`;
-    case definedArgs(decoratorTarget):
-      return `${AN} ${decoratorTarget} decorator failed to apply.`;
+    case definedArgs(decoratorName, decoratorTarget):
+      return `${A} ${decoratorTarget} decorator, ${decoratorName}, failed to apply.`;
     case definedArgs(decoratorName):
       return `A decorator, ${decoratorName}, failed to apply.`;
+    case definedArgs(decoratorTarget):
+      return `${A} ${decoratorTarget} decorator failed to apply.`;
     default:
       return DEFAULT_MESSAGE;
   }

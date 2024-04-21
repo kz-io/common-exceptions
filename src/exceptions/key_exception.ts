@@ -1,16 +1,28 @@
 /**
- * This file exports the KeyException class and its related exception data type.
- *
- * @copyright 2024 integereleven. All rights reserved. MIT license.
+ * @copyright 2020-2024 integereleven. All rights reserved. MIT license.
+ * @file This file exports the KeyException class and its related exception data type.
  */
 
-import { definedArgs } from '../_internals/defined_args.ts';
 import { MethodException } from './method_exception.ts';
+import { definedArgs } from '../_internal/mod.ts';
 
-import type { BaseExceptionData } from '../types/types.ts';
+import type { BaseExceptionData } from '../types/mod.ts';
 
 /**
- * Additional data about the KeyException exception.
+ * Additional, related data for the {@link KeyException} class.
+ *
+ * @example
+ * ```ts
+ * import { assertEquals } from '@std/assert';
+ * import type { KeyExceptionData } from './key_exception.ts';
+ *
+ * const data: KeyExceptionData = {
+ *   key: 'foo',
+ *   validKeys: ['bar', 'baz'],
+ * };
+ *
+ * assertEquals(data.key, 'foo');
+ * ```
  */
 export type KeyExceptionData = BaseExceptionData<{
   /**
@@ -30,37 +42,83 @@ export type KeyExceptionData = BaseExceptionData<{
 }>;
 
 /**
- * An exception raised when a property key doesn’t exist on an object.
+ * An exception raised when access is attempted on a non-existent property key.
+ *
+ * @param T - The type of the additional, relevant data for the exception.
+ *
+ * @example No arguments - default message
+ * ```ts
+ * import { assertEquals } from '@std/assert';
+ * import { KeyException } from './key_exception.ts';
+ *
+ * const exception = new KeyException();
+ *
+ * assertEquals(exception.message, 'Unable to locate a property key on an object.');
+ * ```
+ *
+ * @example With provided message
+ * ```ts
+ * import { assertEquals } from '@std/assert';
+ * import { KeyException } from './key_exception.ts';
+ *
+ * const exception = new KeyException('The name key was not found.');
+ *
+ * assertEquals(exception.message, 'The name key was not found.');
+ * ```
+ *
+ * @example With provided relevant data
+ * ```ts
+ * import { assertEquals } from '@std/assert';
+ * import { KeyException } from './key_exception.ts';
+ *
+ * const exception = new KeyException({ key: 'foo' });
+ *
+ * assertEquals(exception.message, 'Unable to locate a property key, foo, on an object.');
+ * ```
+ *
+ * @example With provided message and relevant data
+ * ```ts
+ * import { assertEquals } from '@std/assert';
+ * import { KeyException } from './key_exception.ts';
+ *
+ * const exception = new KeyException('The name key was not found.', { key: 'foo' });
+ *
+ * assertEquals(exception.message, 'The name key was not found.');
+ * ```
  */
-export class KeyException<T extends KeyExceptionData = KeyExceptionData>
-  extends MethodException<T> {
+export class KeyException<
+  T extends KeyExceptionData = KeyExceptionData,
+> extends MethodException<T> {
   /**
-   * Creates a new KeyException with the default message description.
+   * Creates a new instance of the `KeyException` class with the default message description.
    */
   constructor();
 
   /**
-   * Creates an KeyException with a message description.
+   * Creates a new instance of the `KeyException` class with the specified message description.
    *
-   * @param message A human-readable description of the exception.
+   * @param message The exception message description.
    */
   constructor(message: string);
 
   /**
-   * Creates an KeyException with a message description created from the exception data.
+   * Creates a new instance of the `KeyException` class with the specified relevant data, resulting in a generated message description.
    *
-   * @param data Relevant data about the exception.
+   * @param data The relevant data for the exception.
    */
   constructor(data: T);
 
   /**
-   * Creates an KeyException with a message description and additional relevant data.
+   * Creates a new instance of the `KeyException` class with the specified message description and additional, relevant data.
    *
-   * @param message The human-readable description of the exception.
-   * @param data Additional, relevant data about the exception.
+   * @param message The exception message description.
+   * @param data The additional, relevant data for the exception.
    */
   constructor(message: string, data: T);
 
+  /**
+   * @ignore implementation
+   */
   constructor(messageOrData: string | T = DEFAULT_MESSAGE, data: T = {} as T) {
     let message: string;
 
@@ -77,13 +135,23 @@ export class KeyException<T extends KeyExceptionData = KeyExceptionData>
   }
 
   /**
-   * The numeric code unique to this type of exception.
+   * The exception code.
+   *
+   * @example
+   * ```ts
+   * import { assertEquals } from '@std/assert';
+   * import { KeyException } from './key_exception.ts';
+   *
+   * const exception = new KeyException('The name key was not found.');
+   *
+   * assertEquals(exception.code, 45);
+   * ```
    */
   public readonly code: number = 0x2d;
 }
 
 /**
- * The default message for the KeyException exception.
+ * The default message for the {@link KeyException} exception.
  */
 const DEFAULT_MESSAGE = 'Unable to locate a property key on an object.';
 
@@ -95,30 +163,23 @@ const DEFAULT_MESSAGE = 'Unable to locate a property key on an object.';
  */
 function createMessageFromData(data: KeyExceptionData): string {
   const { key, validKeys, valueName } = data;
+  const keys = (validKeys || []).join(', ');
 
   switch (true) {
-    case definedArgs(key, validKeys, valueName):
-      return `Unable to locate a property key, ${key}, on an object, ${valueName}. Valid property keys include: ${
-        (validKeys || []).join(', ')
-      }.`;
+    case definedArgs(key, keys, valueName):
+      return `Unable to locate a property key, ${key}, on an object, ${valueName}. Valid property keys include: ${keys}.`;
+    case definedArgs(key, keys):
+      return `Unable to locate a property key, ${key}, on an object. Valid property keys include: ${keys}.`;
     case definedArgs(key, valueName):
       return `Unable to locate a property key, ${key}, on an object, ${valueName}.`;
-    case definedArgs(key, validKeys):
-      return `Unable to locate a property key, ${key}, on an object. Valid property keys include: ${
-        (validKeys || []).join(', ')
-      }.`;
-    case definedArgs(valueName, validKeys):
-      return `Unable to locate a property key on an object, ${valueName}. Valid property keys include: ${
-        (validKeys || []).join(', ')
-      }.`;
+    case definedArgs(keys, valueName):
+      return `Unable to locate a property key on an object, ${valueName}. Valid property keys include: ${keys}.`;
     case definedArgs(key):
       return `Unable to locate a property key, ${key}, on an object.`;
+    case definedArgs(keys):
+      return `Unable to locate a property key on an object. Valid property keys include: ${keys}.`;
     case definedArgs(valueName):
       return `Unable to locate a property key on an object, ${valueName}.`;
-    case definedArgs(validKeys):
-      return `Unable to locate a property key on an object. Valid property keys include: ${
-        (validKeys || []).join(', ')
-      }.`;
     default:
       return DEFAULT_MESSAGE;
   }

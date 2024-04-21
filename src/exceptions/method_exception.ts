@@ -1,16 +1,28 @@
 /**
- * This file exports the MethodException class and its related exception data type.
- *
- * @copyright 2024 integereleven. All rights reserved. MIT license.
+ * @copyright 2020-2024 integereleven. All rights reserved. MIT license.
+ * @file This file exports the MethodException class and its related exception data type.
  */
 
-import { definedArgs } from '../_internals/defined_args.ts';
 import { NotFoundException } from './not_found_exception.ts';
+import { definedArgs } from '../_internal/mod.ts';
 
-import type { BaseExceptionData } from '../types/types.ts';
+import type { BaseExceptionData } from '../types/mod.ts';
 
 /**
- * Additional data about the MethodException exception.
+ * Additional, related data for the {@link MethodException} class.
+ *
+ * @example
+ * ```ts
+ * import { assertEquals } from '@std/assert';
+ * import type { MethodExceptionData } from './method_exception.ts';
+ *
+ * const data: MethodExceptionData = {
+ *   methodName: 'foo',
+ *   validMethods: ['bar', 'baz'],
+ * };
+ *
+ * assertEquals(data.methodName, 'foo');
+ * ```
  */
 export type MethodExceptionData = BaseExceptionData<{
   /**
@@ -30,38 +42,83 @@ export type MethodExceptionData = BaseExceptionData<{
 }>;
 
 /**
- * An exception raised when a method does not exist on an object.
+ * An exception raised when access is attempted on a non-existent method.
+ *
+ * @param T - The type of the additional, relevant data for the exception.
+ *
+ * @example No arguments - default message
+ * ```ts
+ * import { assertEquals } from '@std/assert';
+ * import { MethodException } from './method_exception.ts';
+ *
+ * const exception = new MethodException();
+ *
+ * assertEquals(exception.message, 'Unable to locate a method on an object.');
+ * ```
+ *
+ * @example With provided message
+ * ```ts
+ * import { assertEquals } from '@std/assert';
+ * import { MethodException } from './method_exception.ts';
+ *
+ * const exception = new MethodException('The getAction method was not found.');
+ *
+ * assertEquals(exception.message, 'The getAction method was not found.');
+ * ```
+ *
+ * @example With provided relevant data
+ * ```ts
+ * import { assertEquals } from '@std/assert';
+ * import { MethodException } from './method_exception.ts';
+ *
+ * const exception = new MethodException({ methodName: 'foo' });
+ *
+ * assertEquals(exception.message, 'Unable to locate a method, foo, on an object.');
+ * ```
+ *
+ * @example With provided message and relevant data
+ * ```ts
+ * import { assertEquals } from '@std/assert';
+ * import { MethodException } from './method_exception.ts';
+ *
+ * const exception = new MethodException('The getAction method was not found.', { methodName: 'foo' });
+ *
+ * assertEquals(exception.message, 'The getAction method was not found.');
+ * ```
  */
 export class MethodException<
   T extends MethodExceptionData = MethodExceptionData,
 > extends NotFoundException<T> {
   /**
-   * Creates a new MethodException with the default message description.
+   * Creates a new instance of the `MethodException` class with the default message description.
    */
   constructor();
 
   /**
-   * Creates an MethodException with a message description.
+   * Creates a new instance of the `MethodException` class with the specified message description.
    *
-   * @param message A human-readable description of the exception.
+   * @param message The exception message description.
    */
   constructor(message: string);
 
   /**
-   * Creates an MethodException with a message description created from the exception data.
+   * Creates a new instance of the `MethodException` class with the specified relevant data, resulting in a generated message description.
    *
-   * @param data Relevant data about the exception.
+   * @param data The relevant data for the exception.
    */
   constructor(data: T);
 
   /**
-   * Creates an MethodException with a message description and additional relevant data.
+   * Creates a new instance of the `MethodException` class with the specified message description and additional, relevant data.
    *
-   * @param message The human-readable description of the exception.
-   * @param data Additional, relevant data about the exception.
+   * @param message The exception message description.
+   * @param data The additional, relevant data for the exception.
    */
   constructor(message: string, data: T);
 
+  /**
+   * @ignore implementation
+   */
   constructor(messageOrData: string | T = DEFAULT_MESSAGE, data: T = {} as T) {
     let message: string;
 
@@ -78,13 +135,23 @@ export class MethodException<
   }
 
   /**
-   * The numeric code unique to this type of exception.
+   * The exception code.
+   *
+   * @example
+   * ```ts
+   * import { assertEquals } from '@std/assert';
+   * import { MethodException } from './method_exception.ts';
+   *
+   * const exception = new MethodException('The getAction method was not found.');
+   *
+   * assertEquals(exception.code, 44);
+   * ```
    */
   public readonly code: number = 0x2c;
 }
 
 /**
- * The default message for the MethodException exception.
+ * The default message for the {@link MethodException} exception.
  */
 const DEFAULT_MESSAGE = 'Unable to locate a method on an object.';
 
@@ -96,30 +163,23 @@ const DEFAULT_MESSAGE = 'Unable to locate a method on an object.';
  */
 function createMessageFromData(data: MethodExceptionData): string {
   const { methodName, validMethods, valueName } = data;
+  const methods = (validMethods || []).join(', ');
 
   switch (true) {
-    case definedArgs(methodName, validMethods, valueName):
-      return `Unable to locate a method, ${methodName}, on an object, ${valueName}. Valid methods include: ${
-        (validMethods || []).join(', ')
-      }.`;
+    case definedArgs(methodName, methods, valueName):
+      return `Unable to locate a method, ${methodName}, on an object, ${valueName}. Valid methods include: ${methods}.`;
+    case definedArgs(methodName, methods):
+      return `Unable to locate a method, ${methodName}, on an object. Valid methods include: ${methods}.`;
     case definedArgs(methodName, valueName):
       return `Unable to locate a method, ${methodName}, on an object, ${valueName}.`;
-    case definedArgs(methodName, validMethods):
-      return `Unable to locate a method, ${methodName}, on an object. Valid methods include: ${
-        (validMethods || []).join(', ')
-      }.`;
-    case definedArgs(valueName, validMethods):
-      return `Unable to locate a method on an object, ${valueName}. Valid methods include: ${
-        (validMethods || []).join(', ')
-      }.`;
+    case definedArgs(methods, valueName):
+      return `Unable to locate a method on an object, ${valueName}. Valid methods include: ${methods}.`;
     case definedArgs(methodName):
       return `Unable to locate a method, ${methodName}, on an object.`;
+    case definedArgs(methods):
+      return `Unable to locate a method on an object. Valid methods include: ${methods}.`;
     case definedArgs(valueName):
       return `Unable to locate a method on an object, ${valueName}.`;
-    case definedArgs(validMethods):
-      return `Unable to locate a method on an object. Valid methods include: ${
-        (validMethods || []).join(', ')
-      }.`;
     default:
       return DEFAULT_MESSAGE;
   }

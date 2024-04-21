@@ -1,48 +1,79 @@
 /**
- * This file exports the base Exception class and its related exception data type.
- *
- * @copyright 2024 integereleven. All rights reserved. MIT license.
+ * @copyright 2020-2024 integereleven. All rights reserved. MIT license.
+ * @file This file exports the base Exception class and its related exception data type.
  */
 
-import { I11N_DOCS_HOST, I11N_EX2_PATH } from '../_internals/constants.ts';
-
-import type { IHelpful } from '../../deps.ts';
-import type { BaseExceptionData } from '../types/types.ts';
+import { I11N_DOCS_HOST, I11N_EX2_PATH } from '../_internal/mod.ts';
+import type { IHashable, IHelpful } from '@kz/common-types';
+import type { BaseExceptionData } from '../types/mod.ts';
+import { hashData } from '../_internal/hash_data.ts';
 
 /**
- * Additional data about the Exception exception.
+ * Additional, relevant data for {@link Exception} instances.
+ *
+ * @example
+ * ```ts
+ * import { assertEquals } from '@std/assert';
+ * import type { ExceptionData } from './exception.ts';
+ *
+ * const data: ExceptionData = {
+ *   prev: 'Execution failure',
+ * };
+ *
+ * assertEquals(data.prev, 'Execution failure');
+ * ```
  */
 export type ExceptionData = BaseExceptionData;
 
 /**
- * A generic exception, and the base exception from which all other kz.io exceptions are derived.
+ * A generic exception class and base class for all kz exceptions.
+ *
+ * @param T - The type of the additional, relevant data for the exception.
+ *
+ * @example
+ * ```ts
+ * import { assertEquals } from '@std/assert';
+ * import { Exception } from './exception.ts';
+ *
+ * const exception = new Exception('An error occurred.');
+ *
+ * assertEquals(exception.message, 'An error occurred.');
+ * ```
  */
 export class Exception<T extends ExceptionData = ExceptionData> extends Error
-  implements IHelpful {
+  implements IHelpful, IHashable {
   /**
-   * The exception’s additional data properties.
+   * Additional, relevant data for the exception.
    */
   protected exceptionProps: T;
 
   /**
-   * Creates an Exception with a message description.
+   * Creates a new instance of the `Exception` class with the specified message description.
    *
-   * @param message A human-readable description of the exception.
+   * @param message - The exception message description.
+   *
+   * @example
+   * ```ts
+   * import { assertEquals } from '@std/assert';
+   * import { Exception } from './exception.ts';
+   *
+   * const exception = new Exception('An error occurred.');
+   *
+   * assertEquals(exception.message, 'An error occurred.');
+   * ```
    */
   constructor(message: string);
 
   /**
-   * Creates an Exception with a message description and additional relevant data.
+   * Creates a new instance of the `Exception` class with the specified message description and additional, relevant data.
    *
-   * @param message A human-readable description of the exception.
-   * @param data Additional, relevant data about the exception.
+   * @param message The exception message description.
+   * @param data Additional, relevant data for the exception.
    */
   constructor(message: string, data: T);
+
   /**
-   * Creates a new Exception instance.
-   *
-   * @param message A human-readable description of the exception.
-   * @param data Additional, relevant data about the exception.
+   * @ignore implementation
    */
   constructor(message: string, data?: T) {
     super(message);
@@ -53,12 +84,32 @@ export class Exception<T extends ExceptionData = ExceptionData> extends Error
   }
 
   /**
-   * The numeric code unique to this type of exception.
+   * The exception code.
+   *
+   * @example
+   * ```ts
+   * import { assertEquals } from '@std/assert';
+   * import { Exception } from './exception.ts';
+   *
+   * const exception = new Exception('An error occurred.');
+   *
+   * assertEquals(exception.code, 0);
+   * ```
    */
   public readonly code: number = 0x0;
 
   /**
-   * The name for this type of exception.
+   * The exception name.
+   *
+   * @example
+   * ```ts
+   * import { assertEquals } from '@std/assert';
+   * import { Exception } from './exception.ts';
+   *
+   * const exception = new Exception('An error occurred.');
+   *
+   * assertEquals(exception.name, 'Exception');
+   * ```
    */
   public get name(): string {
     const { name } = this.constructor;
@@ -67,7 +118,36 @@ export class Exception<T extends ExceptionData = ExceptionData> extends Error
   }
 
   /**
-   * The URL referencing help for this type of exception.
+   * Returns A hexadecimal string representation of the exception's hash.
+   *
+   * @example
+   * ```ts
+   * import { Exception } from './exception.ts';
+   *
+   * const exception = new Exception('An error occurred.');
+   *
+   * console.log(exception.hash);
+   * // => ex.'55bc248d'
+   * ```
+   */
+  public get hash(): string {
+    return hashData(this).toString(16);
+  }
+
+  /**
+   * The URL to the exception's help documentation.
+   *
+   * @example
+   * ```ts
+   * import { assertEquals } from '@std/assert';
+   * import { Exception } from './exception.ts';
+   *
+   * const exception = new Exception('An error occurred.', { prev: 'Execution failure' });
+   *
+   * const url = 'https://docs.integereleven.com/tools/ex2/0x0?message=An%20error%20occurred&data=%7B%22prev%22%3A%22Execution%20failure%22%7D'
+   *
+   * assertEquals(exception.helpUrl, url);
+   * ```
    */
   public get helpUrl(): string {
     const { message } = this;
@@ -97,9 +177,9 @@ export class Exception<T extends ExceptionData = ExceptionData> extends Error
   }
 
   /**
-   * Returns the base URL for the help documentation for this exception.
+   * Returns the base URL for the exception's help documentation.
    *
-   * @returns The base URL for the help documentation for this exception.
+   * @returns The base URL for the exception's help documentation.
    */
   protected getHelpBaseUrl(): string {
     const { code } = this;
@@ -111,9 +191,9 @@ export class Exception<T extends ExceptionData = ExceptionData> extends Error
   }
 
   /**
-   * Returns the `data` property, URL-encoded.
+   * Returns the URL-encoded data for the exception.
    *
-   * @returns The `data` property, URL-encoded.
+   * @returns The URL-encoded data for the exception.
    */
   protected getUrlEncodedData(): string {
     const { data } = this;
@@ -124,9 +204,9 @@ export class Exception<T extends ExceptionData = ExceptionData> extends Error
   }
 
   /**
-   * Returns the `cause` property, URL-encoded.
+   * Returns the URL-encoded cause for the exception.
    *
-   * @returns The `cause` property, URL-encoded.
+   * @returns The URL-encoded cause for the exception.
    */
   protected getUrlEncodedCause(): string {
     const { cause } = this;
@@ -142,14 +222,28 @@ export class Exception<T extends ExceptionData = ExceptionData> extends Error
       return encodedCause;
     }
 
-    const causeString = JSON.stringify(cause);
+    const causeString = JSON.stringify({
+      message: cause.message,
+      cause: cause.cause,
+    });
     const encodedCause = encodeURIComponent(causeString);
 
     return encodedCause;
   }
 
   /**
-   * The inner cause, or more original, cause of the exception.
+   * The exception cause.
+   *
+   * @example
+   * ```ts
+   * import { assertEquals } from '@std/assert';
+   * import { Exception } from './exception.ts';
+   *
+   * const cause = new Error('Execution failure');
+   * const exception = new Exception('An error occurred.', { cause });
+   *
+   * assertEquals(exception.cause, cause);
+   * ```
    */
   public get cause(): Error | undefined {
     const { cause } = this.exceptionProps;
@@ -158,7 +252,17 @@ export class Exception<T extends ExceptionData = ExceptionData> extends Error
   }
 
   /**
-   * The remaining properties from the data properties, with the cause property removed.
+   * The exception data.
+   *
+   * @example
+   * ```ts
+   * import { assertEquals } from '@std/assert';
+   * import { Exception } from './exception.ts';
+   *
+   * const exception = new Exception('An error occurred.', { prev: 'Execution failure' });
+   *
+   * assertEquals(exception.data, { prev: 'Execution failure' });
+   * ```
    */
   public get data(): Omit<T, 'cause'> | undefined {
     const { cause: _cause, ...data } = this.exceptionProps;
@@ -170,9 +274,20 @@ export class Exception<T extends ExceptionData = ExceptionData> extends Error
   }
 
   /**
-   * Returns a numeric code unique to this type of exception.
+   * Returns the numeric value of the exception (`code`).
    *
-   * @returns A numeric code unique to this type of exception.
+   * @returns The numeric value of the exception (`code`).
+   *
+   * @example
+   * ```ts
+   * import { assertEquals } from '@std/assert';
+   * import { Exception } from './exception.ts';
+   *
+   * const exception = new Exception('An error occurred.');
+   *
+   * assertEquals(exception.valueOf(), 0);
+   * assertEquals(+exception, 0);
+   * ```
    */
   public valueOf(): number {
     const { code } = this;
@@ -181,9 +296,20 @@ export class Exception<T extends ExceptionData = ExceptionData> extends Error
   }
 
   /**
-   * Returns a human-readable description of the exception.
+   * Returns a string representation of the exception.
    *
-   * @returns A human-readable description of the exception.
+   * @returns A string representation of the exception.
+   *
+   * @example
+   * ```ts
+   * import { assertEquals } from '@std/assert';
+   * import { Exception } from './exception.ts';
+   *
+   * const exception = new Exception('An error occurred.');
+   *
+   * assertEquals(exception.toString(), 'Exception: An error occurred.');
+   * assertEquals(`${exception}`, 'Exception: An error occurred.');
+   * ```
    */
   public toString(): string {
     const { name, message } = this;
