@@ -1,5 +1,5 @@
 {
-  "name": "@kz/core-exceptions",
+  "name": "@kz/common-exceptions",
   "version": "0.0.1",
   "exports": {
     ".": "./mod.ts",
