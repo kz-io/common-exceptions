@@ -1,6 +1,6 @@
 /**
  * @copyright 2020-2024 integereleven. All rights reserved. MIT license.
- * @file Exports exceptions and related symbols for the module.
+ * @file Public API exports for the module.
  *
  * Exception in kz are designed to be as intuitive and informative as possible. They are implemented
  * along-side the Exception Explainer tool, referred to as EX^2, which is a web-based tool that helps developers

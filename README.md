@@ -10,11 +10,11 @@ kz is a collection of easy-to-use utility and feature libraries for creating any
 <h1 align="center">@kz/common-exceptions</h1>
 
 <p align="center">
-<!-- @TODO Package description -->
+A collection of the most common exceptions used across kz packages, adapted for API consistency and case-coverage, exhaustively tested, and documented thoroughly.
 </p>
 
 <p align="center">
-<!-- @TODO Link to documentation and other resources -->
+<a href="https://jsr.io/@kz/common-exceptions/doc">Docs</a>
 </p>
 
 <p align="center">
@@ -22,17 +22,14 @@ kz is a collection of easy-to-use utility and feature libraries for creating any
 </p>
 
 <p align="center">
-<a href="https://github.com/i11n/.github/blob/main/.github/CODE_OF_CONDUCT.md">
-  <img alt="Contributor Covenant" src="https://img.shields.io/badge/Contributor%20Covenant-2.1-4baaaa.svg?style=flat-square" />
-</a>
 <a href="https://github.com/kz-io/common-exceptions/commits">
   <img alt="GitHub commit activity" src="https://img.shields.io/github/commit-activity/m/kz-io/common-exceptions?style=flat-square">
 </a>
-<a href="https://github.com/kz-io/common-exceptions/releases">
-  <img alt="GitHub release (latest SemVer)" src="https://img.shields.io/github/v/release/kz-io/common-exceptions?style=flat-square" />
-</a>
 <a href="https://github.com/kz-io/common-exceptions/issues">
   <img alt="GitHub issues" src="https://img.shields.io/github/issues-raw/kz-io/common-exceptions?style=flat-square">
+</a>
+<a href="https://codecov.io/gh/kz-io/common-exceptions" >
+  <img src="https://codecov.io/gh/kz-io/common-exceptions/graph/badge.svg?token=EK5CNEBUPG"/>
 </a>
 </p>
 
@@ -54,57 +51,34 @@ kz is a collection of easy-to-use utility and feature libraries for creating any
 
 [(to top)](#table-of-contents)
 
-### JSR
-
 [jsr][JSR] is used for stable releases.
 
 To install, simply run the `deno add` command:
 
 ```bash
-$ deno add @kz/core
+$ deno add @kz/common-exceptions
 ```
 
 You may also specify a specific version:
 
 ```bash
-$ deno add @kz/core@^0.0.1
+$ deno add @kz/common-exceptions@^0.0.1
 ```
 
 And then import into your module.
 
 ```ts ignore
-import {} from '@kz/core';
+import {} from '@kz/common-exceptions';
 ```
 
-### denopkg.com
-
-If you require a development or unstable release, you can use denopkg.com to import a package.
-
-```json
-// deno.json
-{
-  "imports": {
-    "@kz/core": "https://denopkg.com/kz-io/common-exceptions"
-  }
-}
-```
-
-You may also specify a release or branch.
-
-```json
-// deno.json
-{
-  "imports": {
-    "@kz/core": "https://denopkg.com/kz-io/common-exceptions@dev"
-  }
-}
-```
-
-And then import into your module.
-
-```ts ignore
-import {} from '@kz/core';
-```
+<p align="center">
+<a href="https://jsr.io/@kz/common-exceptions">
+  <img src="https://jsr.io/badges/@kz/common-exceptions" alt="" />
+</a>
+<a href="https://jsr.io/@kz/common-exceptions">
+  <img src="https://jsr.io/badges/@kz/common-exceptions/score" alt="" />
+</a>
+</p>
 
 ## Examples
 
@@ -120,6 +94,12 @@ import {} from '@kz/core';
 [(to top)](#table-of-contents)
 
 Contributions are welcome! Take a look at our [contributing guidelines][contributing] to get started.
+
+<p align="center">
+<a href="https://github.com/i11n/.github/blob/main/.github/CODE_OF_CONDUCT.md">
+  <img alt="Contributor Covenant" src="https://img.shields.io/badge/Contributor%20Covenant-2.1-4baaaa.svg?style=flat-square" />
+</a>
+</p>
 
 ## License
 
