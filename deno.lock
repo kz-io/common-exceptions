@@ -1,0 +1,42 @@
+{
+  "version": "3",
+  "packages": {
+    "specifiers": {
+      "jsr:@kz/common-types@0.0.2": "jsr:@kz/common-types@0.0.2",
+      "jsr:@std/assert@^0.221.0": "jsr:@std/assert@0.221.0",
+      "jsr:@std/fmt@^0.221.0": "jsr:@std/fmt@0.221.0",
+      "jsr:@std/testing@^0.221.0": "jsr:@std/testing@0.221.0"
+    },
+    "jsr": {
+      "@kz/common-types@0.0.2": {
+        "integrity": "48beb5d32c359804b82081cd6ed999014137f69d31d87b264e3d4a9cb9433a34"
+      },
+      "@std/assert@0.221.0": {
+        "integrity": "a5f1aa6e7909dbea271754fd4ab3f4e687aeff4873b4cef9a320af813adb489a",
+        "dependencies": [
+          "jsr:@std/fmt@^0.221.0"
+        ]
+      },
+      "@std/fmt@0.221.0": {
+        "integrity": "379fed69bdd9731110f26b9085aeb740606b20428ce6af31ef6bd45ef8efa62a"
+      },
+      "@std/testing@0.221.0": {
+        "integrity": "d9b5ed7d5dc4e8d193734a594e7f80c04a5a6f34c2493e69c6713ae7fe6f880e"
+      }
+    }
+  },
+  "remote": {
+    "https://denopkg.com/kz-io/common-types@dev/src/mod.ts": "8c67d18c185be04109f342dc08a5e6e88aaca71ba16af69f252e2cf911bf08f1",
+    "https://denopkg.com/kz-io/common-types@dev/src/types/interfaces.ts": "f257a0ae44b28361ffd4a122d0c7e889d98f2f2c8c61cac98cd78133c35639df",
+    "https://denopkg.com/kz-io/common-types@dev/src/types/mod.ts": "3e6aa61bbcfb41881d34fe9986194ecdc4a00b6ea8f7b04317df5c49438d2331",
+    "https://denopkg.com/kz-io/common-types@dev/src/types/type-aliases.ts": "01eb4045c38f48a762690f85d83ed7786395fef93345eb42dea5b5fb86d03a90",
+    "https://denopkg.com/kz-io/common-types@dev/src/version.ts": "f1ed3f0e5282018ef6bbeae30b835afa70c612572efd197a054ae8747b475db8"
+  },
+  "workspace": {
+    "dependencies": [
+      "jsr:@kz/common-types@0.0.2",
+      "jsr:@std/assert@^0.221.0",
+      "jsr:@std/testing@^0.221.0"
+    ]
+  }
+}
