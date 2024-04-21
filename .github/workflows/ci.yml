@@ -44,9 +44,6 @@ jobs:
         with:
           token: ${{ secrets.CODECOV_TOKEN }}
           slug: kz-io/common-exceptions
-          
-    token: ${{ secrets.CODECOV_TOKEN }}
-    slug: kz-io/common-exceptions
         
   cleanliness:
     runs-on: ${{ matrix.os }}
