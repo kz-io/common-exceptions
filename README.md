@@ -14,10 +14,9 @@ A collection of the most common exceptions used across kz packages, adapted for 
 </p>
 
 <p align="center">
-<a href="https://jsr.io/@kz/common-exceptions">Overview</a> | 
+<a href="https://jsr.io/@kz/common-exceptions">Overview</a> |
 <a href="https://jsr.io/@kz/common-exceptions/doc">API Docs</a>
 </p>
-
 
 Exceptions in kz are designed to be as intuitive and informative as possible. They are implemented
 along-side the Exception Explainer tool, referred to as ex^2, which is a web-based tool that helps developers
@@ -33,8 +32,11 @@ the exception and its context.
 import { assertEquals } from '@std/assert';
 import { Exception } from './mod.ts';
 
-const exception = new Exception('An error occurred.', { prev: 'Execution failure' });
-const url = 'https://docs.integereleven.com/tools/ex2/0x0?message=An%20error%20occurred.&data=%7B%22prev%22%3A%22Execution%20failure%22%7D';
+const exception = new Exception('An error occurred.', {
+  prev: 'Execution failure',
+});
+const url =
+  'https://docs.integereleven.com/tools/ex2/0x0?message=An%20error%20occurred.&data=%7B%22prev%22%3A%22Execution%20failure%22%7D';
 
 assertEquals(exception.message, 'An error occurred.');
 assertEquals(exception.data, { prev: 'Execution failure' });
@@ -49,9 +51,12 @@ with an exception message that is programmatically generated from the supplied d
 import { assertEquals } from '@std/assert';
 import { ExternalException } from './mod.ts';
 
-const exception = new ExternalException({externalName: '@i11n/async'});
+const exception = new ExternalException({ externalName: '@i11n/async' });
 
-assertEquals(exception.message, 'An external codebase, @i11n/async, raised an exception.');
+assertEquals(
+  exception.message,
+  'An external codebase, @i11n/async, raised an exception.',
+);
 ```
 
 ## Contributing
