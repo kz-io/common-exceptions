@@ -1,10 +1,9 @@
 /**
  * @copyright 2020-2024 integereleven. All rights reserved. MIT license.
- * @file Type aliases for the module. For interfaces, see ./interfaces.ts.
+ * @file Type aliases for the module.
  */
 
 import type { IndeterminateObject } from '@kz/common-types';
-
 import type { Exception } from '../exceptions/exception.ts';
 
 /**
@@ -41,7 +40,7 @@ export type CommonExceptionData = IndeterminateObject & {
  * @example
  * ```ts
  * import { assertEquals } from '@std/assert';
- * import type { BaseExceptionData } from './type-aliases.ts';
+ * import type { BaseExceptionData } from '../mod.ts';
  *
  * const data: BaseExceptionData<{ foreignCode: number }> = { foreignCode: 0x123fe4 };
  *

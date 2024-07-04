@@ -45,7 +45,7 @@ describe('Exception', () => {
       assertEquals(exc.helpUrl, URL);
       assertEquals(exc.cause, CAUSE);
       assertEquals(exc.data, DATA);
-      assert(typeof exc.hash === 'string');
+      assert(typeof exc.getHash() === 'number');
     });
   });
 

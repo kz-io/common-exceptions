@@ -2,15 +2,11 @@
   "version": "3",
   "packages": {
     "specifiers": {
-      "jsr:@kz/common-types@0.0.2": "jsr:@kz/common-types@0.0.2",
       "jsr:@std/assert@^0.221.0": "jsr:@std/assert@0.221.0",
       "jsr:@std/fmt@^0.221.0": "jsr:@std/fmt@0.221.0",
       "jsr:@std/testing@^0.221.0": "jsr:@std/testing@0.221.0"
     },
     "jsr": {
-      "@kz/common-types@0.0.2": {
-        "integrity": "48beb5d32c359804b82081cd6ed999014137f69d31d87b264e3d4a9cb9433a34"
-      },
       "@std/assert@0.221.0": {
         "integrity": "a5f1aa6e7909dbea271754fd4ab3f4e687aeff4873b4cef9a320af813adb489a",
         "dependencies": [
@@ -26,15 +22,16 @@
     }
   },
   "remote": {
+    "https://denopkg.com/kz-io/common-types@dev/mod.ts": "8595e6ba30d80b92844d05569f0b04a124ee35d9c4bade107fbe68bbb1be1a9c",
     "https://denopkg.com/kz-io/common-types@dev/src/mod.ts": "8c67d18c185be04109f342dc08a5e6e88aaca71ba16af69f252e2cf911bf08f1",
-    "https://denopkg.com/kz-io/common-types@dev/src/types/interfaces.ts": "f257a0ae44b28361ffd4a122d0c7e889d98f2f2c8c61cac98cd78133c35639df",
-    "https://denopkg.com/kz-io/common-types@dev/src/types/mod.ts": "3e6aa61bbcfb41881d34fe9986194ecdc4a00b6ea8f7b04317df5c49438d2331",
-    "https://denopkg.com/kz-io/common-types@dev/src/types/type-aliases.ts": "01eb4045c38f48a762690f85d83ed7786395fef93345eb42dea5b5fb86d03a90",
-    "https://denopkg.com/kz-io/common-types@dev/src/version.ts": "f1ed3f0e5282018ef6bbeae30b835afa70c612572efd197a054ae8747b475db8"
+    "https://denopkg.com/kz-io/common-types@dev/src/types/enums.ts": "9c395897f22d8d939e3d5d6f381ff5518ceaf169803339f58497e6f26a0ef294",
+    "https://denopkg.com/kz-io/common-types@dev/src/types/interfaces.ts": "21444d08bcb46b523140bf6c655d143b68bd98d8864983664e37c4528c5a35d8",
+    "https://denopkg.com/kz-io/common-types@dev/src/types/mod.ts": "0287e8ab1e18aa16c70ecbb76da8eeaaaba77933c27be2a79fecb71f62ffe8a6",
+    "https://denopkg.com/kz-io/common-types@dev/src/types/type_aliases.ts": "8c0448143ccba18c28362db026d91685006e4d5d72844f4907d9b6a58be9c146",
+    "https://denopkg.com/kz-io/common-types@dev/src/version.ts": "8d386c1063577edf6d2a49b047f61a82636cb926fb4a6103012ae88bd9012404"
   },
   "workspace": {
     "dependencies": [
-      "jsr:@kz/common-types@0.0.2",
       "jsr:@std/assert@^0.221.0",
       "jsr:@std/testing@^0.221.0"
     ]

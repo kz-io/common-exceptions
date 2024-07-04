@@ -1,16 +1,16 @@
 <p align="center">
-<img alt="kz logo" height="48" src="https://raw.githubusercontent.com/i11n/.github/main/svg/kz/color/kz.svg" />
+<img alt="kz logo" height="64" src="https://raw.githubusercontent.com/i11n/.github/main/svg/kz/color/kz.svg" />
 <strong>common-exceptions</strong>
 </p>
 
 <p align="center">
-kz is a collection of easy-to-use utility and feature libraries for creating anything you want with the <a href="https://deno.com">Deno</a> runtime.
+kz is a library providing heavily tested and documented features with consistent and predictable APIs designed to simplify the development and maintenance of complex, performant, and scalable <a href="https://deno.com">Deno</a> applications.
 </p>
 
 <h1 align="center">@kz/common-exceptions</h1>
 
 <p align="center">
-A collection of the most common exceptions used across kz packages, adapted for API consistency and case-coverage, exhaustively tested, and documented thoroughly.
+The <code>@kz/core/exceptions</code> module provides commonly used exceptions with intuitive APIs.
 </p>
 
 <p align="center">
@@ -18,46 +18,45 @@ A collection of the most common exceptions used across kz packages, adapted for 
 <a href="https://jsr.io/@kz/common-exceptions/doc">API Docs</a>
 </p>
 
-Exceptions in kz are designed to be as intuitive and informative as possible. They are implemented
-along-side the Exception Explainer tool, referred to as ex^2, which is a web-based tool that helps developers
-understand the exceptions that are thrown in their code.
+All exceptions begin with the `Exception` base class, accepting a message, and optional exception data. All exceptions have a single common exception data property, `cause`, which acts as the inner exception or error, if one was unable to be handled gracefully. Any data that is deemed relevant to the exception can be added to the exception data, though some exceptions have named data properties which are especially relevant.
 
-All exceptions in kz are derived from the base `Exception` class, which can be
-extended to create custom exceptions. All exceptions have a constructor signature that accepts a message and
-additional data. This additional data can be any data that a developer may find useful
-for debugging or handling the exception, this data is provided to the ex^2 tool to help developers understand
-the exception and its context.
+```jsx
+import { assertEquals, assertInstanceOf } from '@std/assert';
+import { Exception, KeyException } from './mod.ts';
 
-```ts
-import { assertEquals } from '@std/assert';
-import { Exception } from './mod.ts';
-
-const exception = new Exception('An error occurred.', {
-  prev: 'Execution failure',
-});
-const url =
-  'https://docs.integereleven.com/tools/ex2/0x0?message=An%20error%20occurred.&data=%7B%22prev%22%3A%22Execution%20failure%22%7D';
-
-assertEquals(exception.message, 'An error occurred.');
-assertEquals(exception.data, { prev: 'Execution failure' });
-assertEquals(exception.helpUrl, url);
-```
-
-Some exceptions have data properties that are especially relevant to
-the exception type and can be used without an exception message to create a new instance of the exception,
-with an exception message that is programmatically generated from the supplied data.
-
-```ts ignore
-import { assertEquals } from '@std/assert';
-import { ExternalException } from './mod.ts';
-
-const exception = new ExternalException({ externalName: '@i11n/async' });
-
-assertEquals(
-  exception.message,
-  'An external codebase, @i11n/async, raised an exception.',
+const keyExc = new KeyException(
+  `The 'name' key does not exist.`,
+  {
+    id: '82hffd03',
+    action: 'hfjkdhak',
+    key: 'key', //named property
+  },
 );
+
+assertInstanceOf(keyExc, KeyException);
+assertInstanceOf(keyExc, Exception);
+
+assertEquals(keyExc.message, `The 'name' key does not exist.`);
 ```
+
+When a message is provided, the exception data is simply along for the ride, useful where developers see fit. Some exceptions can also accept only exception data, of which the named data properties are used to construct the exception message. For integereleven-created exceptions, they also provide insight to the exception explainer tool.
+
+```jsx
+import { assertEquals } from '@std/assert';
+import { KeyException } from './mod.ts';
+
+const keyExc = new KeyException({
+  key: 'name',
+  validKeys: ['first', 'last'],
+});
+
+const expected =
+  'Unable to locate a property key, name, on an object. Valid property keys include: first, last.';
+
+assertEquals(keyExc.message, expected);
+```
+
+Exceptions are created in a hierarchy, and those on the outer branches have the generated message functionality. we use the hierarchy to provide better exception handling.
 
 ## Contributing
 
