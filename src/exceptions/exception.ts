@@ -3,7 +3,7 @@
  * @file This file exports the base Exception class and its related exception data type.
  */
 
-import { I11N_DOCS_HOST, I11N_EX2_PATH, hashData } from '../_internal/mod.ts';
+import { hashData, I11N_DOCS_HOST, I11N_EX2_PATH } from '../_internal/mod.ts';
 
 import type { IHashable, IHelpful } from '@kz/common-types';
 import type { BaseExceptionData } from '../types/mod.ts';

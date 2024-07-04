@@ -21,7 +21,7 @@ The <code>@kz/core/exceptions</code> module provides commonly used exceptions wi
 All exceptions begin with the `Exception` base class, accepting a message, and optional exception data. All exceptions have a single common exception data property, `cause`, which acts as the inner exception or error, if one was unable to be handled gracefully. Any data that is deemed relevant to the exception can be added to the exception data, though some exceptions have named data properties which are especially relevant.
 
 ```jsx
-import { assertInstanceOf, assertEquals } from '@std/assert';
+import { assertEquals, assertInstanceOf } from '@std/assert';
 import { Exception, KeyException } from './mod.ts';
 
 const keyExc = new KeyException(
@@ -30,7 +30,8 @@ const keyExc = new KeyException(
     id: '82hffd03',
     action: 'hfjkdhak',
     key: 'key', //named property
- });
+  },
+);
 
 assertInstanceOf(keyExc, KeyException);
 assertInstanceOf(keyExc, Exception);
@@ -45,11 +46,12 @@ import { assertEquals } from '@std/assert';
 import { KeyException } from './mod.ts';
 
 const keyExc = new KeyException({
-	key: 'name',
-	validKeys: ['first', 'last']
+  key: 'name',
+  validKeys: ['first', 'last'],
 });
 
-const expected = 'Unable to locate a property key, name, on an object. Valid property keys include: first, last.';
+const expected =
+  'Unable to locate a property key, name, on an object. Valid property keys include: first, last.';
 
 assertEquals(keyExc.message, expected);
 ```
