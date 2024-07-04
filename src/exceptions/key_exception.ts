@@ -3,8 +3,8 @@
  * @file This file exports the KeyException class and its related exception data type.
  */
 
-import { MethodException } from './method_exception.ts';
 import { definedArgs } from '../_internal/mod.ts';
+import { MethodException } from './method_exception.ts';
 
 import type { BaseExceptionData } from '../types/mod.ts';
 

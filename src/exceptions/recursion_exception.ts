@@ -7,7 +7,7 @@ import { definedArgs } from '../_internal/defined_args.ts';
 import { OperationException } from './operation_exception.ts';
 
 import type { SoftwareOperation } from '@kz/common-types';
-import type { BaseExceptionData } from '../types/type-aliases.ts';
+import type { BaseExceptionData } from '../types/type_aliases.ts';
 
 /**
  * Additional, related data for the {@link RecursionException} class.

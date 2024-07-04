@@ -3,8 +3,8 @@
  * @file This file exports the ExternalException class and its related exception data type.
  */
 
-import { OperationException } from './operation_exception.ts';
 import { definedArgs } from '../_internal/mod.ts';
+import { OperationException } from './operation_exception.ts';
 
 import type { Codebase } from '@kz/common-types';
 import type { BaseExceptionData } from '../types/mod.ts';

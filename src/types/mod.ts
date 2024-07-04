@@ -3,4 +3,4 @@
  * @file Exports public types from the module.
  */
 
-export type { BaseExceptionData, CommonExceptionData } from './type-aliases.ts';
+export type { BaseExceptionData, CommonExceptionData } from './type_aliases.ts';

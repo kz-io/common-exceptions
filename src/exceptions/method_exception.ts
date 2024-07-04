@@ -3,8 +3,8 @@
  * @file This file exports the MethodException class and its related exception data type.
  */
 
-import { NotFoundException } from './not_found_exception.ts';
 import { definedArgs } from '../_internal/mod.ts';
+import { NotFoundException } from './not_found_exception.ts';
 
 import type { BaseExceptionData } from '../types/mod.ts';
 
