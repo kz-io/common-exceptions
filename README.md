@@ -10,7 +10,7 @@ kz is a library providing heavily tested and documented features with consistent
 <h1 align="center">@kz/common-exceptions</h1>
 
 <p align="center">
-The <code>@kz/core/exceptions</code> module provides commonly used exceptions with intuitive APIs.
+The <code>@kz/common-exceptions</code> module provides commonly used exceptions with intuitive APIs.
 </p>
 
 <p align="center">
@@ -56,7 +56,7 @@ const expected =
 assertEquals(keyExc.message, expected);
 ```
 
-Exceptions are created in a hierarchy, and those on the outer branches have the generated message functionality. we use the hierarchy to provide better exception handling.
+Exceptions are created in a hierarchy, and those on the outer branches have the generated message functionality. We use the hierarchy to provide better exception handling.
 
 ## Contributing
 
