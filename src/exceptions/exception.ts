@@ -3,10 +3,10 @@
  * @file This file exports the base Exception class and its related exception data type.
  */
 
-import { I11N_DOCS_HOST, I11N_EX2_PATH } from '../_internal/mod.ts';
+import { hashData, I11N_DOCS_HOST, I11N_EX2_PATH } from '../_internal/mod.ts';
+
 import type { IHashable, IHelpful } from '@kz/common-types';
 import type { BaseExceptionData } from '../types/mod.ts';
-import { hashData } from '../_internal/hash_data.ts';
 
 /**
  * Additional, relevant data for {@link Exception} instances.
@@ -126,12 +126,12 @@ export class Exception<T extends ExceptionData = ExceptionData> extends Error
    *
    * const exception = new Exception('An error occurred.');
    *
-   * console.log(exception.hash);
-   * // => ex.'55bc248d'
+   * console.log(exception.getHash());
+   * // => ex. 123456789
    * ```
    */
-  public get hash(): string {
-    return hashData(this).toString(16);
+  public getHash(): number {
+    return hashData(this);
   }
 
   /**

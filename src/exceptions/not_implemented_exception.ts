@@ -3,8 +3,8 @@
  * @file This file exports the NotImplementedException class and its related exception data type.
  */
 
-import { InvalidException } from './invalid_exception.ts';
 import { definedArgs } from '../_internal/mod.ts';
+import { InvalidException } from './invalid_exception.ts';
 
 import type { BaseExceptionData } from '../types/mod.ts';
 

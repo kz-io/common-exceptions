@@ -6,7 +6,7 @@
 import { definedArgs } from '../_internal/defined_args.ts';
 import { RangeException } from './range_exception.ts';
 
-import type { BaseExceptionData } from '../types/type-aliases.ts';
+import type { BaseExceptionData } from '../types/type_aliases.ts';
 
 /**
  * Additional, related data for the {@link IndexException} class.

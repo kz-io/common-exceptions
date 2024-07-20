@@ -1,24 +1,87 @@
 <p align="center">
-<img alt="kz logo" height="48" src="https://raw.githubusercontent.com/i11n/.github/main/svg/kz/color/kz.svg" />
+<img alt="kz logo" height="64" src="https://raw.githubusercontent.com/i11n/.github/main/svg/kz/color/kz.svg" />
 <strong>common-exceptions</strong>
 </p>
 
 <p align="center">
-kz is a collection of easy-to-use utility and feature libraries for creating anything you want with the <a href="https://deno.com">Deno</a> runtime.
+kz is a library providing heavily tested and documented features with consistent and predictable APIs designed to simplify the development and maintenance of complex, performant, and scalable <a href="https://deno.com">Deno</a> applications.
 </p>
 
 <h1 align="center">@kz/common-exceptions</h1>
 
 <p align="center">
-A collection of the most common exceptions used across kz packages, adapted for API consistency and case-coverage, exhaustively tested, and documented thoroughly.
+The <code>@kz/common-exceptions</code> module provides commonly used exceptions with intuitive APIs.
 </p>
 
 <p align="center">
-<a href="https://jsr.io/@kz/common-exceptions/doc">Docs</a>
+<a href="https://jsr.io/@kz/common-exceptions">Overview</a> |
+<a href="https://jsr.io/@kz/common-exceptions/doc">API Docs</a>
+</p>
+
+All exceptions begin with the `Exception` base class, accepting a message, and optional exception data. All exceptions have a single common exception data property, `cause`, which acts as the inner exception or error, if one was unable to be handled gracefully. Any data that is deemed relevant to the exception can be added to the exception data, though some exceptions have named data properties which are especially relevant.
+
+```jsx
+import { assertEquals, assertInstanceOf } from '@std/assert';
+import { Exception, KeyException } from './mod.ts';
+
+const keyExc = new KeyException(
+  `The 'name' key does not exist.`,
+  {
+    id: '82hffd03',
+    action: 'hfjkdhak',
+    key: 'key', //named property
+  },
+);
+
+assertInstanceOf(keyExc, KeyException);
+assertInstanceOf(keyExc, Exception);
+
+assertEquals(keyExc.message, `The 'name' key does not exist.`);
+```
+
+When a message is provided, the exception data is simply along for the ride, useful where developers see fit. Some exceptions can also accept only exception data, of which the named data properties are used to construct the exception message. For integereleven-created exceptions, they also provide insight to the exception explainer tool.
+
+```jsx
+import { assertEquals } from '@std/assert';
+import { KeyException } from './mod.ts';
+
+const keyExc = new KeyException({
+  key: 'name',
+  validKeys: ['first', 'last'],
+});
+
+const expected =
+  'Unable to locate a property key, name, on an object. Valid property keys include: first, last.';
+
+assertEquals(keyExc.message, expected);
+```
+
+Exceptions are created in a hierarchy, and those on the outer branches have the generated message functionality. We use the hierarchy to provide better exception handling.
+
+## Contributing
+
+Contributions are welcome! Take a look at our [contributing guidelines][contributing] to get started.
+
+<p align="center">
+<a href="https://github.com/i11n/.github/blob/main/.github/CODE_OF_CONDUCT.md">
+  <img alt="Contributor Covenant" src="https://img.shields.io/badge/Contributor%20Covenant-2.1-4baaaa.svg?style=flat-square" />
+</a>
+</p>
+
+## License
+
+The MIT License (MIT) 2022 integereleven. Refer to [LICENSE][license] for details.
+
+<p align="center">
+<sub>Built with ❤ by integereleven</sub>
 </p>
 
 <p align="center">
-<sub>Built with ❤ by integereleven and <a href="https://github.com/kz-io/common-exceptions/graphs/contributors">contributors</a></sub>
+<img
+  alt="kz.io logo"
+  height="64"
+  src="https://raw.githubusercontent.com/i11n/.github/main/svg/brand/color/open-stroke.svg"
+/>
 </p>
 
 <p align="center">
@@ -33,44 +96,6 @@ A collection of the most common exceptions used across kz packages, adapted for 
 </a>
 </p>
 
-## Table of contents
-
-- [Features](#features)
-- [Installation](#installation)
-- [Examples](#examples)
-- [Contributing](#contributing)
-- [License](#license)
-
-## Features
-
-[(to top)](#table-of-contents)
-
-<!-- @TODO Enumerate key features -->
-
-## Installation
-
-[(to top)](#table-of-contents)
-
-[jsr][JSR] is used for stable releases.
-
-To install, simply run the `deno add` command:
-
-```bash
-$ deno add @kz/common-exceptions
-```
-
-You may also specify a specific version:
-
-```bash
-$ deno add @kz/common-exceptions@^0.0.1
-```
-
-And then import into your module.
-
-```ts ignore
-import {} from '@kz/common-exceptions';
-```
-
 <p align="center">
 <a href="https://jsr.io/@kz/common-exceptions">
   <img src="https://jsr.io/badges/@kz/common-exceptions" alt="" />
@@ -78,41 +103,6 @@ import {} from '@kz/common-exceptions';
 <a href="https://jsr.io/@kz/common-exceptions">
   <img src="https://jsr.io/badges/@kz/common-exceptions/score" alt="" />
 </a>
-</p>
-
-## Examples
-
-[(to top)](#table-of-contents)
-
-<!-- @TODO Add an example, or add links to examples -->
-
-```ts
-```
-
-## Contributing
-
-[(to top)](#table-of-contents)
-
-Contributions are welcome! Take a look at our [contributing guidelines][contributing] to get started.
-
-<p align="center">
-<a href="https://github.com/i11n/.github/blob/main/.github/CODE_OF_CONDUCT.md">
-  <img alt="Contributor Covenant" src="https://img.shields.io/badge/Contributor%20Covenant-2.1-4baaaa.svg?style=flat-square" />
-</a>
-</p>
-
-## License
-
-[(to top)](#table-of-contents)
-
-The MIT License (MIT) 2022 integereleven. Refer to [LICENSE][license] for details.
-
-<p align="center">
-<img
-  alt="kz.io logo"
-  height="64"
-  src="https://raw.githubusercontent.com/i11n/.github/main/svg/brand/color/open-stroke.svg"
-/>
 </p>
 
 [deno]: https://deno.dom "Deno homepage"
