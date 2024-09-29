@@ -13,7 +13,6 @@ import type { BaseExceptionData } from '../types/type_aliases.ts';
  *
  * @example
  * ```ts
- * import { assertEquals } from '@std/assert';
  * import type { RangeExceptionData } from './range_exception.ts';
  *
  * const data: RangeExceptionData = {
@@ -21,7 +20,7 @@ import type { BaseExceptionData } from '../types/type_aliases.ts';
  *   upperBound: 10,
  * };
  *
- * assertEquals(data.value, 25);
+ * console.assert(data.value === 25); // ✔
  * ```
  */
 export type RangeExceptionData = BaseExceptionData<{
@@ -47,54 +46,54 @@ export type RangeExceptionData = BaseExceptionData<{
 }>;
 
 /**
- * An exception raised when access is attempted on a non-existent property key.
+ * A `RangeException` is raised when a value is outside the range of values.
  *
  * @param T - The type of the additional, relevant data for the exception.
  *
  * @example No arguments - default message
  * ```ts
- * import { assertEquals } from '@std/assert';
  * import { RangeException } from './range_exception.ts';
  *
  * const exception = new RangeException();
+ * const msg = 'A numeric value is out of range.';
  *
- * assertEquals(exception.message, 'A numeric value is out of range.');
+ * console.assert(exception.message === msg); // ✔
  * ```
  *
  * @example With provided message
  * ```ts
- * import { assertEquals } from '@std/assert';
  * import { RangeException } from './range_exception.ts';
  *
  * const exception = new RangeException('The value is out of range.');
+ * const msg = 'The value is out of range.';
  *
- * assertEquals(exception.message, 'The value is out of range.');
+ * console.assert(exception.message === msg); // ✔
  * ```
  *
  * @example With provided relevant data
  * ```ts
- * import { assertEquals } from '@std/assert';
  * import { RangeException } from './range_exception.ts';
  *
  * const exception = new RangeException({
  *   value: 25,
  *   upperBound: 10,
  * });
+ * const msg = 'A numeric value, 25, is out of range. It must be less-than, or equal to, 10.';
  *
- * assertEquals(exception.message, 'A numeric value, 25, is out of range. It must be less-than, or equal to, 10.');
+ * console.assert(exception.message === msg); // ✔
  * ```
  *
  * @example With provided message and relevant data
  * ```ts
- * import { assertEquals } from '@std/assert';
  * import { RangeException } from './range_exception.ts';
  *
  * const exception = new RangeException('The value is out of range.', {
  *   value: 25,
  *   upperBound: 10,
  * });
+ * const msg = 'The value is out of range.';
  *
- * assertEquals(exception.message, 'The value is out of range.');
+ * console.assert(exception.message === msg); // ✔
  * ```
  */
 export class RangeException<
@@ -150,12 +149,11 @@ export class RangeException<
    *
    * @example
    * ```ts
-   * import { assertEquals } from '@std/assert';
    * import { RangeException } from './range_exception.ts';
    *
    * const exception = new RangeException('The value is out of range.');
    *
-   * assertEquals(exception.code, 40);
+   * console.assert(exception.code === 40); // ✔
    * ```
    */
   public readonly code: number = 0x28;

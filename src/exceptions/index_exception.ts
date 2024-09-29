@@ -13,7 +13,6 @@ import type { BaseExceptionData } from '../types/type_aliases.ts';
  *
  * @example
  * ```ts
- * import { assertEquals } from '@std/assert';
  * import type { IndexExceptionData } from './index_exception.ts';
  *
  * const data: IndexExceptionData = {
@@ -21,7 +20,7 @@ import type { BaseExceptionData } from '../types/type_aliases.ts';
  *   upperBound: 10,
  * };
  *
- * assertEquals(data.index, 25);
+ * console.assert(data.index === 25); // ✔
  * ```
  */
 export type IndexExceptionData = BaseExceptionData<{
@@ -42,54 +41,54 @@ export type IndexExceptionData = BaseExceptionData<{
 }>;
 
 /**
- * An exception raised when access is attempted on a non-existent property key.
+ * An `IndexException` is raised when an index is outside the bounds of an array.
  *
  * @param T - The type of the additional, relevant data for the exception.
  *
  * @example No arguments - default message
  * ```ts
- * import { assertEquals } from '@std/assert';
  * import { IndexException } from './index_exception.ts';
  *
  * const exception = new IndexException();
+ * const msg = 'An index is outside the bounds of an array.';
  *
- * assertEquals(exception.message, 'An index is outside the bounds of an array.');
+ * console.assert(exception.message === msg); // ✔
  * ```
  *
  * @example With provided message
  * ```ts
- * import { assertEquals } from '@std/assert';
  * import { IndexException } from './index_exception.ts';
  *
  * const exception = new IndexException('The index is invalid.');
+ * const msg = 'The index is invalid.';
  *
- * assertEquals(exception.message, 'The index is invalid.');
+ * console.assert(exception.message === msg); // ✔
  * ```
  *
  * @example With provided relevant data
  * ```ts
- * import { assertEquals } from '@std/assert';
  * import { IndexException } from './index_exception.ts';
  *
  * const exception = new IndexException({
  *   index: 25,
  *   upperBound: 10,
  * });
+ * const msg = 'An index, 25, is outside the bounds of an array. It must be between 0 and 10, inclusive.';
  *
- * assertEquals(exception.message, 'An index, 25, is outside the bounds of an array. It must be between 0 and 10, inclusive.');
+ * console.assert(exception.message === msg); // ✔
  * ```
  *
  * @example With provided message and relevant data
  * ```ts
- * import { assertEquals } from '@std/assert';
  * import { IndexException } from './index_exception.ts';
  *
  * const exception = new IndexException('The index is invalid.', {
  *   index: 25,
  *   upperBound: 10,
  * });
+ * const msg = 'The index is invalid.';
  *
- * assertEquals(exception.message, 'The index is invalid.');
+ * console.assert(exception.message === msg); // ✔
  * ```
  */
 export class IndexException<T extends IndexExceptionData = IndexExceptionData>
@@ -144,12 +143,11 @@ export class IndexException<T extends IndexExceptionData = IndexExceptionData>
    *
    * @example
    * ```ts
-   * import { assertEquals } from '@std/assert';
    * import { IndexException } from './index_exception.ts';
    *
    * const exception = new IndexException('The index is invalid.');
    *
-   * assertEquals(exception.code, 31);
+   * console.assert(exception.code === 31); // ✔
    * ```
    */
   public readonly code: number = 0x29;

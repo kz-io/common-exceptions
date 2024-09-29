@@ -13,7 +13,6 @@ import type { BaseExceptionData } from '../types/mod.ts';
  *
  * @example
  * ```ts
- * import { assertEquals } from '@std/assert';
  * import type { ArgumentExceptionData } from './argument_exception.ts';
  *
  * const data: ArgumentExceptionData = {
@@ -21,7 +20,7 @@ import type { BaseExceptionData } from '../types/mod.ts';
  *   argumentConstraints: ['bar', 'baz'],
  * };
  *
- * assertEquals(data.argumentName, 'foo');
+ * console.assert(data.argumentName === 'foo'); // ✔
  * ```
  */
 export type ArgumentExceptionData = BaseExceptionData<{
@@ -37,48 +36,48 @@ export type ArgumentExceptionData = BaseExceptionData<{
 }>;
 
 /**
- * An exception raised when an argument has the correct type but has an invalid value.
+ * An `ArgumentException` is raised when an argument has the correct type but has an invalid value.
  *
  * @param T - The type of the additional, relevant data for the exception.
  *
  * @example No arguments - default message
  * ```ts
- * import { assertEquals } from '@std/assert';
  * import { ArgumentException } from './argument_exception.ts';
  *
  * const exception = new ArgumentException();
+ * const msg = 'An argument does not satisfy its constraints.'
  *
- * assertEquals(exception.message, 'An argument does not satisfy its constraints.');
+ * console.assert(exception.message === msg); // ✔
  * ```
  *
  * @example With provided message
  * ```ts
- * import { assertEquals } from '@std/assert';
  * import { ArgumentException } from './argument_exception.ts';
  *
- * const exception = new ArgumentException('A value has the correct type, but is invalid.');
+ * const msg = 'A value has the correct type, but is invalid.';
+ * const exception = new ArgumentException(msg);
  *
- * assertEquals(exception.message, 'A value has the correct type, but is invalid.');
+ * console.assert(exception.message === msg); // ✔
  * ```
  *
  * @example With provided relevant data
  * ```ts
- * import { assertEquals } from '@std/assert';
  * import { ArgumentException } from './argument_exception.ts';
  *
  * const exception = new ArgumentException({ argumentName: 'foo' });
+ * const msg = 'An argument, foo, does not satisfy its constraints.';
  *
- * assertEquals(exception.message, 'An argument, foo, does not satisfy its constraints.');
+ * console.assert(exception.message === msg); // ✔
  * ```
  *
  * @example With provided message and relevant data
  * ```ts
- * import { assertEquals } from '@std/assert';
  * import { ArgumentException } from './argument_exception.ts';
  *
  * const exception = new ArgumentException('A value has the correct type, but is invalid.', { argumentName: 'foo' });
+ * const msg = 'A value has the correct type, but is invalid.';
  *
- * assertEquals(exception.message, 'A value has the correct type, but is invalid.');
+ * console.assert(exception.message === msg); // ✔
  * ```
  */
 export class ArgumentException<
@@ -134,12 +133,11 @@ export class ArgumentException<
    *
    * @example
    * ```ts
-   * import { assertEquals } from '@std/assert';
    * import { ArgumentException } from './argument_exception.ts';
    *
    * const exception = new ArgumentException('A value has the correct type, but is invalid.');
    *
-   * assertEquals(exception.code, 39);
+   * console.assert(exception.code === 39);
    * ```
    */
   public readonly code: number = 0x27;

@@ -10,31 +10,29 @@ import { OSException, type OSExceptionData } from './os_exception.ts';
  *
  * @example
  * ```ts
- * import { assertEquals } from '@std/assert';
  * import type { DiskExceptionData } from './disk_exception.ts';
  *
  * const data: DiskExceptionData = {
  *   value: 'foo',
  * };
  *
- * assertEquals(data.value, 'foo');
+ * console.assert(data.value === 'foo'); // ✔
  * ```
  */
 export type DiskExceptionData = OSExceptionData;
 
 /**
- * An exception raised when an operation encounters a disk-related error.
+ * A `DiskException` is raised when a system operation returns a disk-related error.
  *
  * @param T - The type of the additional, relevant data for the exception.
  *
  * @example
  * ```ts
- * import { assertEquals } from '@std/assert';
  * import { DiskException } from './disk_exception.ts';
  *
  * const exception = new DiskException('Disk is full.');
  *
- * assertEquals(exception.message, 'Disk is full.');
+ * console.assert(exception.message === 'Disk is full.'); // ✔
  * ```
  */
 export class DiskException<T extends DiskExceptionData = DiskExceptionData>
@@ -44,12 +42,11 @@ export class DiskException<T extends DiskExceptionData = DiskExceptionData>
    *
    * @example
    * ```ts
-   * import { assertEquals } from '@std/assert';
    * import { DiskException } from './disk_exception.ts';
    *
    * const exception = new DiskException('Disk is full.');
    *
-   * assertEquals(exception.code, 3);
+   * console.assert(exception.code === 3); // ✔
    * ```
    */
   public readonly code: number = 0x3;

@@ -14,7 +14,6 @@ import type { BaseExceptionData } from '../types/mod.ts';
  *
  * @example
  * ```ts
- * import { assertEquals } from '@std/assert';
  * import type { DecoratorExceptionData } from './decorator_exception.ts';
  *
  * const data: DecoratorExceptionData = {
@@ -22,7 +21,7 @@ import type { BaseExceptionData } from '../types/mod.ts';
  *   decoratorName: 'foo',
  * };
  *
- * assertEquals(data.decoratorName, 'foo');
+ * console.assert(data.decoratorName === 'foo'); // ✔
  * ```
  */
 export type DecoratorExceptionData = BaseExceptionData<{
@@ -38,48 +37,48 @@ export type DecoratorExceptionData = BaseExceptionData<{
 }>;
 
 /**
- * An exception raised when a decorator fails to apply.
+ * A `DecoratorException` is raised when a decorator fails to apply.
  *
  * @param T - The type of the additional, relevant data for the exception.
  *
  * @example No arguments - default message
  * ```ts
- * import { assertEquals } from '@std/assert';
  * import { DecoratorException } from './decorator_exception.ts';
  *
  * const exception = new DecoratorException();
+ * const msg = 'A decorator failed to apply.';
  *
- * assertEquals(exception.message, 'A decorator failed to apply.');
+ * console.assert(exception.message === msg); // ✔
  * ```
  *
  * @example With provided message
  * ```ts
- * import { assertEquals } from '@std/assert';
  * import { DecoratorException } from './decorator_exception.ts';
  *
  * const exception = new DecoratorException('Decorator was unable to apply.');
+ * const msg = 'Decorator was unable to apply.';
  *
- * assertEquals(exception.message, 'Decorator was unable to apply.');
+ * console.assert(exception.message === msg); // ✔
  * ```
  *
  * @example With provided relevant data
  * ```ts
- * import { assertEquals } from '@std/assert';
  * import { DecoratorException } from './decorator_exception.ts';
  *
  * const exception = new DecoratorException({ decoratorName: 'foo' });
+ * const msg = 'A decorator, foo, failed to apply.';
  *
- * assertEquals(exception.message, 'A decorator, foo, failed to apply.');
+ * console.assert(exception.message === msg); // ✔
  * ```
  *
  * @example With provided message and relevant data
  * ```ts
- * import { assertEquals } from '@std/assert';
  * import { DecoratorException } from './decorator_exception.ts';
  *
  * const exception = new DecoratorException('Decorator was unable to apply.', { argumentName: 'foo' });
+ * const msg = 'Decorator was unable to apply.';
  *
- * assertEquals(exception.message, 'Decorator was unable to apply.');
+ * console.assert(exception.message === msg); // ✔
  * ```
  */
 export class DecoratorException<
@@ -135,12 +134,11 @@ export class DecoratorException<
    *
    * @example
    * ```ts
-   * import { assertEquals } from '@std/assert';
    * import { DecoratorException } from './decorator_exception.ts';
    *
    * const exception = new DecoratorException('Decorator was unable to apply.');
    *
-   * assertEquals(exception.code, 38);
+   * console.assert(exception.code === 38); // ✔
    * ```
    */
   public readonly code: number = 0x26;

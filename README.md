@@ -21,7 +21,6 @@ The <code>@kz/common-exceptions</code> module provides commonly used exceptions 
 All exceptions begin with the `Exception` base class, accepting a message, and optional exception data. All exceptions have a single common exception data property, `cause`, which acts as the inner exception or error, if one was unable to be handled gracefully. Any data that is deemed relevant to the exception can be added to the exception data, though some exceptions have named data properties which are especially relevant.
 
 ```jsx
-import { assertEquals, assertInstanceOf } from '@std/assert';
 import { Exception, KeyException } from './mod.ts';
 
 const keyExc = new KeyException(
@@ -32,17 +31,16 @@ const keyExc = new KeyException(
     key: 'key', //named property
   },
 );
+const msg = `The 'name' key does not exist.`;
 
-assertInstanceOf(keyExc, KeyException);
-assertInstanceOf(keyExc, Exception);
-
-assertEquals(keyExc.message, `The 'name' key does not exist.`);
+console.assert(keyExc instanceof KeyException); // ✔
+console.assert(keyExc instanceof Exception); // ✔
+console.assert(keyExc.message === msg); // ✔
 ```
 
 When a message is provided, the exception data is simply along for the ride, useful where developers see fit. Some exceptions can also accept only exception data, of which the named data properties are used to construct the exception message. For integereleven-created exceptions, they also provide insight to the exception explainer tool.
 
 ```jsx
-import { assertEquals } from '@std/assert';
 import { KeyException } from './mod.ts';
 
 const keyExc = new KeyException({
@@ -53,7 +51,7 @@ const keyExc = new KeyException({
 const expected =
   'Unable to locate a property key, name, on an object. Valid property keys include: first, last.';
 
-assertEquals(keyExc.message, expected);
+console.assert(keyExc.message === expected); // ✔
 ```
 
 Exceptions are created in a hierarchy, and those on the outer branches have the generated message functionality. We use the hierarchy to provide better exception handling.

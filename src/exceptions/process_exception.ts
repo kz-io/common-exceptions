@@ -10,31 +10,29 @@ import { OSException, type OSExceptionData } from './os_exception.ts';
  *
  * @example
  * ```ts
- * import { assertEquals } from '@std/assert';
  * import type { ProcessExceptionData } from './process_exception.ts';
  *
  * const data: ProcessExceptionData = {
  *   value: 'foo',
  * };
  *
- * assertEquals(data.value, 'foo');
+ * console.assert(data.value === 'foo'); // ✔
  * ```
  */
 export type ProcessExceptionData = OSExceptionData;
 
 /**
- * An exception raised when an operation is encounters a process-related error.
+ * A `ProcessException` is raised when a system operation returns a process-related error.
  *
  * @param T - The type of the additional, relevant data for the exception.
  *
  * @example
  * ```ts
- * import { assertEquals } from '@std/assert';
  * import { ProcessException } from './process_exception.ts';
  *
  * const exception = new ProcessException('Process ended abruptly.');
  *
- * assertEquals(exception.message, 'Process ended abruptly.');
+ * console.assert(exception.message === 'Process ended abruptly.'); // ✔
  * ```
  */
 export class ProcessException<
@@ -45,12 +43,11 @@ export class ProcessException<
    *
    * @example
    * ```ts
-   * import { assertEquals } from '@std/assert';
    * import { ProcessException } from './process_exception.ts';
    *
    * const exception = new ProcessException('Process ended abruptly.');
    *
-   * assertEquals(exception.code, 4);
+   * console.assert(exception.code === 4); // ✔
    * ```
    */
   public readonly code: number = 0x4;

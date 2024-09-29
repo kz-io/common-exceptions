@@ -14,7 +14,6 @@ import type { BaseExceptionData } from '../types/mod.ts';
  *
  * @example
  * ```ts
- * import { assertEquals } from '@std/assert';
  * import type { IterationExceptionData } from './iteration_exception.ts';
  *
  * const data: IterationExceptionData = {
@@ -22,7 +21,7 @@ import type { BaseExceptionData } from '../types/mod.ts';
  *   operationType: 'process',
  * };
  *
- * assertEquals(data.operationName, 'foo');
+ * console.assert(data.operationName === 'foo'); // ✔
  * ```
  */
 export type IterationExceptionData = BaseExceptionData<{
@@ -48,48 +47,48 @@ export type IterationExceptionData = BaseExceptionData<{
 }>;
 
 /**
- * An exception raised when a software operation has exceeded max iterations.
+ * An `IterationException` is raised when a software operation has exceeded max iterations.
  *
  * @param T - The type of the additional, relevant data for the exception.
  *
  * @example No arguments - default message
  * ```ts
- * import { assertEquals } from '@std/assert';
  * import { IterationException } from './iteration_exception.ts';
  *
  * const exception = new IterationException();
+ * const msg = 'An operation exceeded the maximum number of iterations.';
  *
- * assertEquals(exception.message, 'An operation exceeded the maximum number of iterations.');
+ * console.assert(exception.message === msg); // ✔
  * ```
  *
  * @example With provided message
  * ```ts
- * import { assertEquals } from '@std/assert';
  * import { IterationException } from './iteration_exception.ts';
  *
  * const exception = new IterationException('A process encountered an infinite loop.');
+ * const msg = 'A process encountered an infinite loop.';
  *
- * assertEquals(exception.message, 'A process encountered an infinite loop.');
+ * console.assert(exception.message === msg); // ✔
  * ```
  *
  * @example With provided relevant data
  * ```ts
- * import { assertEquals } from '@std/assert';
  * import { IterationException } from './iteration_exception.ts';
  *
  * const exception = new IterationException({ operationName: 'foo', iterationCount: 5 });
+ * const msg = 'An operation, foo, exceeded the maximum number of 5 iterations.';
  *
- * assertEquals(exception.message, 'An operation, foo, exceeded the maximum number of 5 iterations.');
+ * console.assert(exception.message === msg); // ✔
  * ```
  *
  * @example With provided message and relevant data
  * ```ts
- * import { assertEquals } from '@std/assert';
  * import { IterationException } from './iteration_exception.ts';
  *
  * const exception = new IterationException('A process encountered an infinite loop.', { operationName: 'foo', iterationCount: 5 });
+ * const msg = 'A process encountered an infinite loop.';
  *
- * assertEquals(exception.message, 'A process encountered an infinite loop.');
+ * console.assert(exception.message === msg); // ✔
  * ```
  */
 export class IterationException<
@@ -145,12 +144,11 @@ export class IterationException<
    *
    * @example
    * ```ts
-   * import { assertEquals } from '@std/assert';
    * import { IterationException } from './iteration_exception.ts';
    *
    * const exception = new IterationException('A process encountered an infinite loop.');
    *
-   * assertEquals(exception.code, 19);
+   * console.assert(exception.code === 19); // ✔
    * ```
    */
   public readonly code: number = 0x13;

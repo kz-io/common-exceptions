@@ -10,31 +10,30 @@ import { OSException, type OSExceptionData } from './os_exception.ts';
  *
  * @example
  * ```ts
- * import { assertEquals } from '@std/assert';
  * import type { MemoryExceptionData } from './memory_exception.ts';
  *
  * const data: MemoryExceptionData = {
  *   value: 'foo',
  * };
  *
- * assertEquals(data.value, 'foo');
+ * console.assert(data.value === 'foo'); // ✔
  * ```
  */
 export type MemoryExceptionData = OSExceptionData;
 
 /**
- * An exception raised when an operation is encounters a memory-related error.
+ * A `MemoryException` is raised when a system operation returns a memory-related error.
  *
  * @param T - The type of the additional, relevant data for the exception.
  *
  * @example
  * ```ts
- * import { assertEquals } from '@std/assert';
  * import { MemoryException } from './memory_exception.ts';
  *
  * const exception = new MemoryException('No more memory is available.');
+ * const msg = 'No more memory is available.';
  *
- * assertEquals(exception.message, 'No more memory is available.');
+ * console.assert(exception.message === msg); // ✔
  * ```
  */
 export class MemoryException<
@@ -45,12 +44,11 @@ export class MemoryException<
    *
    * @example
    * ```ts
-   * import { assertEquals } from '@std/assert';
    * import { MemoryException } from './memory_exception.ts';
    *
    * const exception = new MemoryException('No more memory is available.');
    *
-   * assertEquals(exception.code, 2);
+   * console.assert(exception.code === 2); // ✔
    * ```
    */
   public readonly code: number = 0x2;

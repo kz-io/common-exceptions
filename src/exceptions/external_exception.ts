@@ -14,7 +14,6 @@ import type { BaseExceptionData } from '../types/mod.ts';
  *
  * @example
  * ```ts
- * import { assertEquals } from '@std/assert';
  * import type { ExternalExceptionData } from './external_exception.ts';
  *
  * const data: ExternalExceptionData = {
@@ -22,7 +21,7 @@ import type { BaseExceptionData } from '../types/mod.ts';
  *   externalType: 'library',
  * };
  *
- * assertEquals(data.externalName, 'foo');
+ * console.assert(data.externalName === 'foo'); // ✔
  * ```
  */
 export type ExternalExceptionData = BaseExceptionData<{
@@ -38,48 +37,48 @@ export type ExternalExceptionData = BaseExceptionData<{
 }>;
 
 /**
- * An exception raised when an external codebase encrounters an exception or error.
+ * An `ExternalException` is raised when an external codebase raised an exception.
  *
  * @param T - The type of the additional, relevant data for the exception.
  *
  * @example No arguments - default message
  * ```ts
- * import { assertEquals } from '@std/assert';
  * import { ExternalException } from './external_exception.ts';
  *
  * const exception = new ExternalException();
+ * const msg = 'An external codebase raised an exception.';
  *
- * assertEquals(exception.message, 'An external codebase raised an exception.');
+ * console.assert(exception.message === msg); // ✔
  * ```
  *
  * @example With provided message
  * ```ts
- * import { assertEquals } from '@std/assert';
  * import { ExternalException } from './external_exception.ts';
  *
  * const exception = new ExternalException('An external library encountered an issue.');
+ * const msg = 'An external library encountered an issue.';
  *
- * assertEquals(exception.message, 'An external library encountered an issue.');
+ * console.assert(exception.message === msg); // ✔
  * ```
  *
  * @example With provided relevant data
  * ```ts
- * import { assertEquals } from '@std/assert';
  * import { ExternalException } from './external_exception.ts';
  *
  * const exception = new ExternalException({ externalName: 'foo' });
+ * const msg = 'An external codebase, foo, raised an exception.';
  *
- * assertEquals(exception.message, 'An external codebase, foo, raised an exception.');
+ * console.assert(exception.message === msg); // ✔
  * ```
  *
  * @example With provided message and relevant data
  * ```ts
- * import { assertEquals } from '@std/assert';
  * import { ExternalException } from './external_exception.ts';
  *
  * const exception = new ExternalException('An external library encountered an issue.', { externalName: 'foo' });
+ * const msg = 'An external library encountered an issue.';
  *
- * assertEquals(exception.message, 'An external library encountered an issue.');
+ * console.assert(exception.message === msg); // ✔
  * ```
  */
 export class ExternalException<
@@ -135,12 +134,11 @@ export class ExternalException<
    *
    * @example
    * ```ts
-   * import { assertEquals } from '@std/assert';
    * import { ExternalException } from './external_exception.ts';
    *
    * const exception = new ExternalException('An external library encountered an issue.');
    *
-   * assertEquals(exception.code, 17);
+   * console.assert(exception.code === 17); // ✔
    * ```
    */
   public readonly code: number = 0x11;

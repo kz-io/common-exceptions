@@ -10,31 +10,30 @@ import { ValueException, type ValueExceptionData } from './value_exception.ts';
  *
  * @example
  * ```ts
- * import { assertEquals } from '@std/assert';
  * import type { FormatExceptionData } from './format_exception.ts';
  *
  * const data: FormatExceptionData = {
  *   value: 'foo',
  * };
  *
- * assertEquals(data.value, 'foo');
+ * console.assert(data.value === 'foo'); // ✔
  * ```
  */
 export type FormatExceptionData = ValueExceptionData;
 
 /**
- * An exception raised when formatting is unsuccessful, or invalid.
+ * A `FormatException` is raised when formatting is unsuccessful, or invalid.
  *
  * @param T - The type of the additional, relevant data for the exception.
  *
  * @example
  * ```ts
- * import { assertEquals } from '@std/assert';
  * import { FormatException } from './format_exception.ts';
  *
  * const exception = new FormatException('The JSON format is invalid.');
+ * const msg = 'The JSON format is invalid.';
  *
- * assertEquals(exception.message, 'The JSON format is invalid.');
+ * console.assert(exception.message === msg); // ✔
  * ```
  */
 export class FormatException<
@@ -45,12 +44,11 @@ export class FormatException<
    *
    * @example
    * ```ts
-   * import { assertEquals } from '@std/assert';
    * import { FormatException } from './format_exception.ts';
    *
    * const exception = new FormatException('The JSON format is invalid.');
    *
-   * assertEquals(exception.code, 37);
+   * console.assert(exception.code === 37); // ✔
    * ```
    */
   public readonly code: number = 0x25;
