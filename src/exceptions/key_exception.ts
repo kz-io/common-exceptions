@@ -13,7 +13,6 @@ import type { BaseExceptionData } from '../types/mod.ts';
  *
  * @example
  * ```ts
- * import { assertEquals } from '@std/assert';
  * import type { KeyExceptionData } from './key_exception.ts';
  *
  * const data: KeyExceptionData = {
@@ -21,7 +20,7 @@ import type { BaseExceptionData } from '../types/mod.ts';
  *   validKeys: ['bar', 'baz'],
  * };
  *
- * assertEquals(data.key, 'foo');
+ * console.assert(data.key === 'foo'); // ✔
  * ```
  */
 export type KeyExceptionData = BaseExceptionData<{
@@ -42,48 +41,44 @@ export type KeyExceptionData = BaseExceptionData<{
 }>;
 
 /**
- * An exception raised when access is attempted on a non-existent property key.
+ * A `KeyException` is raised when a property key doesn’t exist on an object.
  *
  * @param T - The type of the additional, relevant data for the exception.
  *
  * @example No arguments - default message
  * ```ts
- * import { assertEquals } from '@std/assert';
  * import { KeyException } from './key_exception.ts';
  *
  * const exception = new KeyException();
- *
- * assertEquals(exception.message, 'Unable to locate a property key on an object.');
+ * const msg = 'Unable to locate a property key on an object.';
+ * console.assert(exception.message === msg); // ✔
  * ```
  *
  * @example With provided message
  * ```ts
- * import { assertEquals } from '@std/assert';
  * import { KeyException } from './key_exception.ts';
  *
  * const exception = new KeyException('The name key was not found.');
- *
- * assertEquals(exception.message, 'The name key was not found.');
+ * const msg = 'The name key was not found.';
+ * console.assert(exception.message === msg); // ✔
  * ```
  *
  * @example With provided relevant data
  * ```ts
- * import { assertEquals } from '@std/assert';
  * import { KeyException } from './key_exception.ts';
  *
  * const exception = new KeyException({ key: 'foo' });
- *
- * assertEquals(exception.message, 'Unable to locate a property key, foo, on an object.');
+ * const msg = 'Unable to locate a property key, foo, on an object.';
+ * console.assert(exception.message === msg); // ✔
  * ```
  *
  * @example With provided message and relevant data
  * ```ts
- * import { assertEquals } from '@std/assert';
  * import { KeyException } from './key_exception.ts';
  *
  * const exception = new KeyException('The name key was not found.', { key: 'foo' });
- *
- * assertEquals(exception.message, 'The name key was not found.');
+ * const msg = 'The name key was not found.';
+ * console.assert(exception.message === msg); // ✔
  * ```
  */
 export class KeyException<
@@ -139,12 +134,11 @@ export class KeyException<
    *
    * @example
    * ```ts
-   * import { assertEquals } from '@std/assert';
    * import { KeyException } from './key_exception.ts';
    *
    * const exception = new KeyException('The name key was not found.');
    *
-   * assertEquals(exception.code, 45);
+   * console.assert(exception.code === 45); // ✔
    * ```
    */
   public readonly code: number = 0x2d;

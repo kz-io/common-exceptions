@@ -13,31 +13,29 @@ import type { BaseExceptionData } from '../types/mod.ts';
  *
  * @example
  * ```ts
- * import { assertEquals } from '@std/assert';
  * import type { ExceptionData } from './exception.ts';
  *
  * const data: ExceptionData = {
  *   prev: 'Execution failure',
  * };
  *
- * assertEquals(data.prev, 'Execution failure');
+ * console.assert(data.prev === 'Execution failure'); // ✔
  * ```
  */
 export type ExceptionData = BaseExceptionData;
 
 /**
- * A generic exception class and base class for all kz exceptions.
+ * An `Exception` is a generic exception, and the base exception from which all other kz exceptions are derived.
  *
  * @param T - The type of the additional, relevant data for the exception.
  *
  * @example
  * ```ts
- * import { assertEquals } from '@std/assert';
  * import { Exception } from './exception.ts';
  *
  * const exception = new Exception('An error occurred.');
  *
- * assertEquals(exception.message, 'An error occurred.');
+ * console.assert(exception.message === 'An error occurred.'); // ✔
  * ```
  */
 export class Exception<T extends ExceptionData = ExceptionData> extends Error
@@ -54,12 +52,11 @@ export class Exception<T extends ExceptionData = ExceptionData> extends Error
    *
    * @example
    * ```ts
-   * import { assertEquals } from '@std/assert';
    * import { Exception } from './exception.ts';
    *
    * const exception = new Exception('An error occurred.');
    *
-   * assertEquals(exception.message, 'An error occurred.');
+   * console.assert(exception.message === 'An error occurred.'); // ✔
    * ```
    */
   constructor(message: string);
@@ -88,12 +85,11 @@ export class Exception<T extends ExceptionData = ExceptionData> extends Error
    *
    * @example
    * ```ts
-   * import { assertEquals } from '@std/assert';
    * import { Exception } from './exception.ts';
    *
    * const exception = new Exception('An error occurred.');
    *
-   * assertEquals(exception.code, 0);
+   * console.assert(exception.code === 0); // ✔
    * ```
    */
   public readonly code: number = 0x0;
@@ -103,12 +99,11 @@ export class Exception<T extends ExceptionData = ExceptionData> extends Error
    *
    * @example
    * ```ts
-   * import { assertEquals } from '@std/assert';
    * import { Exception } from './exception.ts';
    *
    * const exception = new Exception('An error occurred.');
    *
-   * assertEquals(exception.name, 'Exception');
+   * console.assert(exception.name === 'Exception'); // ✔
    * ```
    */
   public get name(): string {
@@ -139,14 +134,13 @@ export class Exception<T extends ExceptionData = ExceptionData> extends Error
    *
    * @example
    * ```ts
-   * import { assertEquals } from '@std/assert';
    * import { Exception } from './exception.ts';
    *
    * const exception = new Exception('An error occurred.', { prev: 'Execution failure' });
    *
    * const url = 'https://docs.integereleven.com/tools/ex2/0x0?message=An%20error%20occurred&data=%7B%22prev%22%3A%22Execution%20failure%22%7D'
    *
-   * assertEquals(exception.helpUrl, url);
+   * console.assert(exception.helpUrl === url); // ✔
    * ```
    */
   public get helpUrl(): string {
@@ -236,13 +230,12 @@ export class Exception<T extends ExceptionData = ExceptionData> extends Error
    *
    * @example
    * ```ts
-   * import { assertEquals } from '@std/assert';
    * import { Exception } from './exception.ts';
    *
    * const cause = new Error('Execution failure');
    * const exception = new Exception('An error occurred.', { cause });
    *
-   * assertEquals(exception.cause, cause);
+   * console.assert(exception.cause?.message === cause.message); // ✔
    * ```
    */
   public get cause(): Error | undefined {
@@ -256,12 +249,11 @@ export class Exception<T extends ExceptionData = ExceptionData> extends Error
    *
    * @example
    * ```ts
-   * import { assertEquals } from '@std/assert';
    * import { Exception } from './exception.ts';
    *
    * const exception = new Exception('An error occurred.', { prev: 'Execution failure' });
    *
-   * assertEquals(exception.data, { prev: 'Execution failure' });
+   * console.assert(exception.data?.prev === 'Execution failure'); // ✔
    * ```
    */
   public get data(): Omit<T, 'cause'> | undefined {
@@ -280,13 +272,12 @@ export class Exception<T extends ExceptionData = ExceptionData> extends Error
    *
    * @example
    * ```ts
-   * import { assertEquals } from '@std/assert';
    * import { Exception } from './exception.ts';
    *
    * const exception = new Exception('An error occurred.');
    *
-   * assertEquals(exception.valueOf(), 0);
-   * assertEquals(+exception, 0);
+   * console.assert(exception.valueOf() === 0); // ✔
+   * console.assert(+exception === 0);          // ✔
    * ```
    */
   public valueOf(): number {
@@ -302,13 +293,12 @@ export class Exception<T extends ExceptionData = ExceptionData> extends Error
    *
    * @example
    * ```ts
-   * import { assertEquals } from '@std/assert';
    * import { Exception } from './exception.ts';
    *
    * const exception = new Exception('An error occurred.');
    *
-   * assertEquals(exception.toString(), 'Exception: An error occurred.');
-   * assertEquals(`${exception}`, 'Exception: An error occurred.');
+   * console.assert(exception.toString() === 'Exception: An error occurred.'); // ✔
+   * console.assert(`${exception}` === 'Exception: An error occurred.');       // ✔
    * ```
    */
   public toString(): string {

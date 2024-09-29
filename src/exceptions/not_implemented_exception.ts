@@ -13,14 +13,13 @@ import type { BaseExceptionData } from '../types/mod.ts';
  *
  * @example
  * ```ts
- * import { assertEquals } from '@std/assert';
  * import type { NotImplementedExceptionData } from './not_implemented_exception.ts';
  *
  * const data: NotImplementedExceptionData = {
  *   methodName: 'foo',
  * };
  *
- * assertEquals(data.methodName, 'foo');
+ * console.assert(data.methodName === 'foo'); // ✔
  * ```
  */
 export type NotImplementedExceptionData = BaseExceptionData<{
@@ -31,48 +30,48 @@ export type NotImplementedExceptionData = BaseExceptionData<{
 }>;
 
 /**
- * An exception raised when a class method, or function, has not been implemented.
+ * A `NotImplementedException` is raised when a class method is not implemented.
  *
  * @param T - The type of the additional, relevant data for the exception.
  *
  * @example No arguments - default message
  * ```ts
- * import { assertEquals } from '@std/assert';
  * import { NotImplementedException } from './not_implemented_exception.ts';
  *
  * const exception = new NotImplementedException();
+ * const msg = 'A class method is not implemented.';
  *
- * assertEquals(exception.message, 'A class method is not implemented.');
+ * console.assert(exception.message === msg); // ✔
  * ```
  *
  * @example With provided message
  * ```ts
- * import { assertEquals } from '@std/assert';
  * import { NotImplementedException } from './not_implemented_exception.ts';
  *
  * const exception = new NotImplementedException('This method is not implemented.');
+ * const msg = 'This method is not implemented.';
  *
- * assertEquals(exception.message, 'This method is not implemented.');
+ * console.assert(exception.message === msg); // ✔
  * ```
  *
  * @example With provided relevant data
  * ```ts
- * import { assertEquals } from '@std/assert';
  * import { NotImplementedException } from './not_implemented_exception.ts';
  *
  * const exception = new NotImplementedException({ methodName: 'foo' });
+ * const msg = 'A class method, foo, is not implemented.';
  *
- * assertEquals(exception.message, 'A class method, foo, is not implemented.');
+ * console.assert(exception.message === msg); // ✔
  * ```
  *
  * @example With provided message and relevant data
  * ```ts
- * import { assertEquals } from '@std/assert';
  * import { NotImplementedException } from './not_implemented_exception.ts';
  *
  * const exception = new NotImplementedException('This method is not implemented.', { methodName: 'foo' });
+ * const msg = 'This method is not implemented.';
  *
- * assertEquals(exception.message, 'This method is not implemented.');
+ * console.assert(exception.message === msg); // ✔
  * ```
  */
 export class NotImplementedException<
@@ -128,12 +127,11 @@ export class NotImplementedException<
    *
    * @example
    * ```ts
-   * import { assertEquals } from '@std/assert';
    * import { NotImplementedException } from './not_implemented_exception.ts';
    *
    * const exception = new NotImplementedException('This method is not implemented.');
    *
-   * assertEquals(exception.code, 34);
+   * console.assert(exception.code === 34); // ✔
    * ```
    */
   public readonly code: number = 0x22;

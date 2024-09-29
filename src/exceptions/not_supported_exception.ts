@@ -13,31 +13,30 @@ import {
  *
  * @example
  * ```ts
- * import { assertEquals } from '@std/assert';
  * import type { NotSupportedExceptionData } from './not_supported_exception.ts';
  *
  * const data: NotSupportedExceptionData = {
  *   value: 'foo',
  * };
  *
- * assertEquals(data.value, 'foo');
+ * console.assert(data.value === 'foo'); // ✔
  * ```
  */
 export type NotSupportedExceptionData = InvalidExceptionData;
 
 /**
- * An exception raised when a process of feature is not supported for an environment.
+ * A `NotSupportedException` is raised when a process or feature is not supported for an environment.
  *
  * @param T - The type of the additional, relevant data for the exception.
  *
  * @example
  * ```ts
- * import { assertEquals } from '@std/assert';
  * import { NotSupportedException } from './not_supported_exception.ts';
  *
  * const exception = new NotSupportedException('This operation is not supported.');
+ * const msg = 'This operation is not supported.';
  *
- * assertEquals(exception.message, 'This operation is not supported.');
+ * console.assert(exception.message === msg); // ✔
  * ```
  */
 export class NotSupportedException<
@@ -48,12 +47,11 @@ export class NotSupportedException<
    *
    * @example
    * ```ts
-   * import { assertEquals } from '@std/assert';
    * import { NotSupportedException } from './not_supported_exception.ts';
    *
    * const exception = new NotSupportedException('This operation is not supported.');
    *
-   * assertEquals(exception.code, 33);
+   * console.assert(exception.code === 33); // ✔
    * ```
    */
   public readonly code: number = 0x21;
