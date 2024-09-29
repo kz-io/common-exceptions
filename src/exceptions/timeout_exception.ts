@@ -14,7 +14,6 @@ import type { BaseExceptionData } from '../types/mod.ts';
  *
  * @example
  * ```ts
- * import { assertEquals } from '@std/assert';
  * import type { TimeoutExceptionData } from './timeout_exception.ts';
  *
  * const data: TimeoutExceptionData = {
@@ -22,7 +21,7 @@ import type { BaseExceptionData } from '../types/mod.ts';
  *   operationType: 'process',
  * };
  *
- * assertEquals(data.operationName, 'foo');
+ * console.assert(data.operationName === 'foo'); // ✔
  * ```
  */
 export type TimeoutExceptionData = BaseExceptionData<{
@@ -43,48 +42,48 @@ export type TimeoutExceptionData = BaseExceptionData<{
 }>;
 
 /**
- * An exception raised when a software operation has timed out.
+ * A `TimeoutException` is raised when a software operation has timed out.
  *
  * @param T - The type of the additional, relevant data for the exception.
  *
  * @example No arguments - default message
  * ```ts
- * import { assertEquals } from '@std/assert';
  * import { TimeoutException } from './timeout_exception.ts';
  *
  * const exception = new TimeoutException();
+ * const msg = 'An operation timed out.';
  *
- * assertEquals(exception.message, 'An operation timed out.');
+ * console.assert(exception.message === msg); // ✔
  * ```
  *
  * @example With provided message
  * ```ts
- * import { assertEquals } from '@std/assert';
  * import { TimeoutException } from './timeout_exception.ts';
  *
  * const exception = new TimeoutException('An operation failed to complete timely.');
+ * const msg = 'An operation failed to complete timely.';
  *
- * assertEquals(exception.message, 'An operation failed to complete timely.');
+ * console.assert(exception.message === msg); // ✔
  * ```
  *
  * @example With provided relevant data
  * ```ts
- * import { assertEquals } from '@std/assert';
  * import { TimeoutException } from './timeout_exception.ts';
  *
  * const exception = new TimeoutException({ operationName: 'foo', operationTimeout: 5000 });
+ * const msg = 'An operation, foo, timed out after 5000ms.';
  *
- * assertEquals(exception.message, 'An operation, foo, timed out after 5000ms.');
+ * console.assert(exception.message === msg); // ✔
  * ```
  *
  * @example With provided message and relevant data
  * ```ts
- * import { assertEquals } from '@std/assert';
  * import { TimeoutException } from './timeout_exception.ts';
  *
  * const exception = new TimeoutException('An operation failed to complete timely.', { operationName: 'foo', operationTimeout: 5000 });
+ * const msg = 'An operation failed to complete timely.';
  *
- * assertEquals(exception.message, 'An operation failed to complete timely.');
+ * console.assert(exception.message === msg); // ✔
  * ```
  */
 export class TimeoutException<
@@ -140,12 +139,11 @@ export class TimeoutException<
    *
    * @example
    * ```ts
-   * import { assertEquals } from '@std/assert';
    * import { TimeoutException } from './timeout_exception.ts';
    *
    * const exception = new TimeoutException('An operation failed to complete timely.');
    *
-   * assertEquals(exception.code, 20);
+   * console.assert(exception.code === 20); // ✔
    * ```
    */
   public readonly code: number = 0x14;

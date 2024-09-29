@@ -22,13 +22,13 @@ export function hashData(
   const cause = exc.cause;
   const hashableData = { id, name, code, message, cause, data };
   const encodableString = JSON.stringify(hashableData);
-  let hash = 0;
+  const chars = encodableString.split('');
 
-  for (let i = 0; i < encodableString.length; i++) {
-    const char = encodableString.charCodeAt(i);
-    hash = (hash << 5) - hash + char;
-    hash = hash & hash;
-  }
+  const hash = chars.reduce((acc, char) => {
+    acc = ((acc << 5) - acc) + char.charCodeAt(0);
+    acc = acc & acc;
+    return acc;
+  }, 0);
 
   return hash;
 }

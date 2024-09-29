@@ -14,7 +14,6 @@ import type { BaseExceptionData } from '../types/type_aliases.ts';
  *
  * @example
  * ```ts
- * import { assertEquals } from '@std/assert';
  * import type { RecursionExceptionData } from './recursion_exception.ts';
  *
  * const data: RecursionExceptionData = {
@@ -22,7 +21,7 @@ import type { BaseExceptionData } from '../types/type_aliases.ts';
  *   operationName: 'foo',
  * };
  *
- * assertEquals(data.operationName, 'foo');
+ * console.assert(data.operationName === 'foo'); // ✔
  * ```
  */
 export type RecursionExceptionData = BaseExceptionData<{
@@ -42,48 +41,48 @@ export type RecursionExceptionData = BaseExceptionData<{
 }>;
 
 /**
- * An exception raised when an argument has the correct type but has an invalid value.
+ * A `RecursionException` is raised when a software operation exceeds a max recursion depth.
  *
  * @param T - The type of the additional, relevant data for the exception.
  *
  * @example No arguments - default message
  * ```ts
- * import { assertEquals } from '@std/assert';
  * import { RecursionException } from './recursion_exception.ts';
  *
  * const exception = new RecursionException();
+ * const msg = 'An operation exceeded maximum recursion depth.';
  *
- * assertEquals(exception.message, 'An operation exceeded maximum recursion depth.');
+ * console.assert(exception.message === msg); // ✔
  * ```
  *
  * @example With provided message
  * ```ts
- * import { assertEquals } from '@std/assert';
  * import { RecursionException } from './recursion_exception.ts';
  *
  * const exception = new RecursionException('A process reached the bottom.');
+ * const msg = 'A process reached the bottom.';
  *
- * assertEquals(exception.message, 'A process reached the bottom.');
+ * console.assert(exception.message === msg); // ✔
  * ```
  *
  * @example With provided relevant data
  * ```ts
- * import { assertEquals } from '@std/assert';
  * import { RecursionException } from './recursion_exception.ts';
  *
  * const exception = new RecursionException({ operationName: 'foo', recursionDepth: 5 });
+ * const msg = 'An operation, foo, exceeded maximum recursion depth of 5 levels.';
  *
- * assertEquals(exception.message, 'An operation, foo, exceeded maximum recursion depth of 5 levels.');
+ * console.assert(exception.message === msg); // ✔
  * ```
  *
  * @example With provided message and relevant data
  * ```ts
- * import { assertEquals } from '@std/assert';
  * import { RecursionException } from './recursion_exception.ts';
  *
  * const exception = new RecursionException('A process reached the bottom.', { operationName: 'foo', recursionDepth: 5 });
+ * const msg = 'A process reached the bottom.';
  *
- * assertEquals(exception.message, 'A process reached the bottom.');
+ * console.assert(exception.message === msg); // ✔
  * ```
  */
 export class RecursionException<
@@ -139,12 +138,11 @@ export class RecursionException<
    *
    * @example
    * ```ts
-   * import { assertEquals } from '@std/assert';
    * import { RecursionException } from './recursion_exception.ts';
    *
    * const exception = new RecursionException('A process reached the bottom.');
    *
-   * assertEquals(exception.code, 18);
+   * console.assert(exception.code === 18); // ✔
    * ```
    */
   public readonly code: number = 0x12;

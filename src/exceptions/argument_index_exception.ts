@@ -13,7 +13,6 @@ import type { BaseExceptionData } from '../types/mod.ts';
  *
  * @example
  * ```ts
- * import { assertEquals } from '@std/assert';
  * import type { ArgumentIndexExceptionData } from './argument_index_exception.ts';
  *
  * const data: ArgumentIndexExceptionData = {
@@ -21,7 +20,7 @@ import type { BaseExceptionData } from '../types/mod.ts';
  *   upperBound: 5,
  * };
  *
- * assertEquals(data.index, 10);
+ * console.assert(data.index === 10); // ✔
  * ```
  */
 export type ArgumentIndexExceptionData = BaseExceptionData<{
@@ -37,54 +36,54 @@ export type ArgumentIndexExceptionData = BaseExceptionData<{
 }>;
 
 /**
- * An exception raised when an index is outside the bounds of an arguments array.
+ * An `ArgumentIndexException` is raised when an index is outside the bounds of an arguments array.
  *
  * @param T - The type of the additional, relevant data for the exception.
  *
  * @example No arguments - default message
  * ```ts
- * import { assertEquals } from '@std/assert';
  * import { ArgumentIndexException } from './argument_index_exception.ts';
  *
  * const exception = new ArgumentIndexException();
+ * const msg = 'An index is outside the bounds of an arguments array.';
  *
- * assertEquals(exception.message, 'An index is outside the bounds of an arguments array.');
+ * console.assert(exception.message === msg); // ✔
  * ```
  *
  * @example With provided message
  * ```ts
- * import { assertEquals } from '@std/assert';
  * import { ArgumentIndexException } from './argument_index_exception.ts';
  *
  * const exception = new ArgumentIndexException('The index is outside the arguments array range.');
+ * const msg = 'The index is outside the arguments array range.';
  *
- * assertEquals(exception.message, 'The index is outside the arguments array range.');
+ * console.assert(exception.message === msg); // ✔
  * ```
  *
  * @example With provided relevant data
  * ```ts
- * import { assertEquals } from '@std/assert';
  * import { ArgumentIndexException } from './argument_index_exception.ts';
  *
  * const exception = new ArgumentIndexException({
  *   index: 10,
  *   upperBound: 5,
  * });
+ * const msg = 'An index, 10, is outside the bounds of an arguments array. It must be between 0 and 5, inclusive.';
  *
- * assertEquals(exception.message, 'An index, 10, is outside the bounds of an arguments array. It must be between 0 and 5, inclusive.');
+ * console.assert(exception.message === msg); // ✔
  * ```
  *
  * @example With provided message and relevant data
  * ```ts
- * import { assertEquals } from '@std/assert';
  * import { ArgumentIndexException } from './argument_index_exception.ts';
  *
  * const exception = new ArgumentIndexException('The index is outside the arguments array range.', {
  *   index: 10,
  *   upperBound: 5,
  * });
+ * const msg = 'The index is outside the arguments array range.';
  *
- * assertEquals(exception.message, 'The index is outside the arguments array range.');
+ * console.assert(exception.message === msg); // ✔
  * ```
  */
 export class ArgumentIndexException<
@@ -140,12 +139,11 @@ export class ArgumentIndexException<
    *
    * @example
    * ```ts
-   * import { assertEquals } from '@std/assert';
    * import { ArgumentIndexException } from './argument_index_exception.ts';
    *
    * const exception = new ArgumentIndexException('The index is outside the arguments array range.');
    *
-   * assertEquals(exception.code, 42);
+   * console.assert(exception.code === 42); // ✔
    * ```
    */
   public readonly code: number = 0x2a;

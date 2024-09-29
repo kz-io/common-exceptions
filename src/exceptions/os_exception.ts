@@ -10,31 +10,29 @@ import { Exception, type ExceptionData } from './exception.ts';
  *
  * @example
  * ```ts
- * import { assertEquals } from '@std/assert';
  * import type { OSExceptionData } from './os_exception.ts';
  *
  * const data: OSExceptionData = {
  *   value: 'foo',
  * };
  *
- * assertEquals(data.value, 'foo');
+ * console.assert(data.value === 'foo'); // ✔
  * ```
  */
 export type OSExceptionData = ExceptionData;
 
 /**
- * An exception raised when an operation encounters a system-related error.
+ * An `OSException` is raised when a system operation returns a system-related error, such as I/O errors.
  *
  * @param T - The type of the additional, relevant data for the exception.
  *
  * @example
  * ```ts
- * import { assertEquals } from '@std/assert';
  * import { OSException } from './os_exception.ts';
  *
  * const exception = new OSException('An OS error occurred.');
  *
- * assertEquals(exception.message, 'An OS error occurred.');
+ * console.assert(exception.message === 'An OS error occurred.'); // ✔
  * ```
  */
 export class OSException<T extends OSExceptionData = OSExceptionData>
@@ -44,12 +42,11 @@ export class OSException<T extends OSExceptionData = OSExceptionData>
    *
    * @example
    * ```ts
-   * import { assertEquals } from '@std/assert';
    * import { OSException } from './os_exception.ts';
    *
    * const exception = new OSException('An OS error occurred.');
    *
-   * assertEquals(exception.code, 1);
+   * console.assert(exception.code === 1); // ✔
    * ```
    */
   public readonly code: number = 0x1;

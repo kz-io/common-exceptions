@@ -13,7 +13,6 @@ import type { BaseExceptionData } from '../types/mod.ts';
  *
  * @example
  * ```ts
- * import { assertEquals } from '@std/assert';
  * import type { MethodExceptionData } from './method_exception.ts';
  *
  * const data: MethodExceptionData = {
@@ -21,7 +20,7 @@ import type { BaseExceptionData } from '../types/mod.ts';
  *   validMethods: ['bar', 'baz'],
  * };
  *
- * assertEquals(data.methodName, 'foo');
+ * console.assert(data.methodName === 'foo'); // ✔
  * ```
  */
 export type MethodExceptionData = BaseExceptionData<{
@@ -42,48 +41,48 @@ export type MethodExceptionData = BaseExceptionData<{
 }>;
 
 /**
- * An exception raised when access is attempted on a non-existent method.
+ * A `MethodException` is raised when a method does not exist on an object.
  *
  * @param T - The type of the additional, relevant data for the exception.
  *
  * @example No arguments - default message
  * ```ts
- * import { assertEquals } from '@std/assert';
  * import { MethodException } from './method_exception.ts';
  *
  * const exception = new MethodException();
+ * const msg = 'Unable to locate a method on an object.';
  *
- * assertEquals(exception.message, 'Unable to locate a method on an object.');
+ * console.assert(exception.message === msg); // ✔
  * ```
  *
  * @example With provided message
  * ```ts
- * import { assertEquals } from '@std/assert';
  * import { MethodException } from './method_exception.ts';
  *
  * const exception = new MethodException('The getAction method was not found.');
+ * const msg = 'The getAction method was not found.';
  *
- * assertEquals(exception.message, 'The getAction method was not found.');
+ * console.assert(exception.message === msg); // ✔
  * ```
  *
  * @example With provided relevant data
  * ```ts
- * import { assertEquals } from '@std/assert';
  * import { MethodException } from './method_exception.ts';
  *
  * const exception = new MethodException({ methodName: 'foo' });
+ * const msg = 'Unable to locate a method, foo, on an object.';
  *
- * assertEquals(exception.message, 'Unable to locate a method, foo, on an object.');
+ * console.assert(exception.message === msg); // ✔
  * ```
  *
  * @example With provided message and relevant data
  * ```ts
- * import { assertEquals } from '@std/assert';
  * import { MethodException } from './method_exception.ts';
  *
  * const exception = new MethodException('The getAction method was not found.', { methodName: 'foo' });
+ * const msg = 'The getAction method was not found.';
  *
- * assertEquals(exception.message, 'The getAction method was not found.');
+ * console.assert(exception.message === msg); // ✔
  * ```
  */
 export class MethodException<
@@ -139,12 +138,11 @@ export class MethodException<
    *
    * @example
    * ```ts
-   * import { assertEquals } from '@std/assert';
    * import { MethodException } from './method_exception.ts';
    *
    * const exception = new MethodException('The getAction method was not found.');
    *
-   * assertEquals(exception.code, 44);
+   * console.assert(exception.code === 44); // ✔
    * ```
    */
   public readonly code: number = 0x2c;

@@ -13,31 +13,30 @@ import {
  *
  * @example
  * ```ts
- * import { assertEquals } from '@std/assert';
  * import type { ValueExceptionData } from './value_exception.ts';
  *
  * const data: ValueExceptionData = {
  *   value: 'foo',
  * };
  *
- * assertEquals(data.value, 'foo');
+ * console.assert(data.value === 'foo'); // ✔
  * ```
  */
 export type ValueExceptionData = InvalidExceptionData;
 
 /**
- * An exception raised when a value has the correct type, but is still invalid.
+ * A `ValueException` is raised when a value is invalid.
  *
  * @param T - The type of the additional, relevant data for the exception.
  *
  * @example
  * ```ts
- * import { assertEquals } from '@std/assert';
  * import { ValueException } from './value_exception.ts';
  *
  * const exception = new ValueException('The provided value is invalid.');
+ * const msg = 'The provided value is invalid.';
  *
- * assertEquals(exception.message, 'The provided value is invalid.');
+ * console.assert(exception.message === msg); // ✔
  * ```
  */
 export class ValueException<T extends ValueExceptionData = ValueExceptionData>
@@ -47,12 +46,11 @@ export class ValueException<T extends ValueExceptionData = ValueExceptionData>
    *
    * @example
    * ```ts
-   * import { assertEquals } from '@std/assert';
    * import { ValueException } from './value_exception.ts';
    *
    * const exception = new ValueException('The provided value is invalid.');
    *
-   * assertEquals(exception.code, 35);
+   * console.assert(exception.code === 35); // ✔
    * ```
    */
   public readonly code: number = 0x23;
